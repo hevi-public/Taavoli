@@ -9,10 +9,13 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selection = 0
+    
+    @State var isShown: Bool
+    @State var image: Image?
  
     var body: some View {
         TabView(selection: $selection){
-            PhotoTab().tabItem {
+            CaptureImageView(isShown: $isShown, image: $image).tabItem {
                 VStack {
                     Image(systemName: "camera.fill")
                     Text("Photo")
@@ -36,6 +39,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(isShown: false)
     }
 }

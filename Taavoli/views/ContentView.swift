@@ -12,33 +12,24 @@ struct ContentView: View {
  
     var body: some View {
         TabView(selection: $selection){
-            Text("Photo")
-            .font(.title)
-            .tabItem {
+            PhotoTab().tabItem {
                 VStack {
                     Image(systemName: "camera.fill")
                     Text("Photo")
                 }
-            }
-            .tag(0)
-            Text("Album")
-            .font(.title)
-            .tabItem {
+            }.tag(0)
+            AlbumTab().tabItem {
                 VStack {
                     Image(systemName: "camera.on.rectangle.fill")
                     Text("Album")
                 }
-            }
-            .tag(1)
-            PencilCanvas()
-            .font(.title)
-            .tabItem {
+            }.tag(1)
+            PencilTab().tabItem {
                 VStack {
                     Image(systemName: "pencil")
                     Text("Drawing")
                 }
-            }
-            .tag(2)
+            }.tag(2)
         }
     }
 }

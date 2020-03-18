@@ -20,6 +20,9 @@
 		D7A5AE1E2422AC55006E2B27 /* CanvasViewImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE1C2422AC55006E2B27 /* CanvasViewImpl.swift */; };
 		D7A5AE1F2422AC55006E2B27 /* CanvasViewContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE1D2422AC55006E2B27 /* CanvasViewContainerView.swift */; };
 		D7A5AE232422ADBB006E2B27 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE222422ADBB006E2B27 /* Environment.swift */; };
+		D7A5AE252422C0A2006E2B27 /* AlbumTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE242422C0A2006E2B27 /* AlbumTab.swift */; };
+		D7A5AE272422C0B3006E2B27 /* PhotoTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE262422C0B3006E2B27 /* PhotoTab.swift */; };
+		D7A5AE292422C0C3006E2B27 /* PencilTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE282422C0C3006E2B27 /* PencilTab.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +62,9 @@
 		D7A5AE1C2422AC55006E2B27 /* CanvasViewImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewImpl.swift; sourceTree = "<group>"; };
 		D7A5AE1D2422AC55006E2B27 /* CanvasViewContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewContainerView.swift; sourceTree = "<group>"; };
 		D7A5AE222422ADBB006E2B27 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		D7A5AE242422C0A2006E2B27 /* AlbumTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTab.swift; sourceTree = "<group>"; };
+		D7A5AE262422C0B3006E2B27 /* PhotoTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTab.swift; sourceTree = "<group>"; };
+		D7A5AE282422C0C3006E2B27 /* PencilTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PencilTab.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +159,9 @@
 			children = (
 				D7A5AE152422A960006E2B27 /* drawing */,
 				D7A5ADE82422A613006E2B27 /* ContentView.swift */,
+				D7A5AE242422C0A2006E2B27 /* AlbumTab.swift */,
+				D7A5AE262422C0B3006E2B27 /* PhotoTab.swift */,
+				D7A5AE282422C0C3006E2B27 /* PencilTab.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -306,10 +315,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7A5AE172422A970006E2B27 /* PencilCanvasSwUI.swift in Sources */,
+				D7A5AE292422C0C3006E2B27 /* PencilTab.swift in Sources */,
 				D7A5AE232422ADBB006E2B27 /* Environment.swift in Sources */,
 				D7A5ADE22422A613006E2B27 /* AppDelegate.swift in Sources */,
+				D7A5AE252422C0A2006E2B27 /* AlbumTab.swift in Sources */,
 				D7A5AE1E2422AC55006E2B27 /* CanvasViewImpl.swift in Sources */,
 				D7A5ADE42422A613006E2B27 /* SceneDelegate.swift in Sources */,
+				D7A5AE272422C0B3006E2B27 /* PhotoTab.swift in Sources */,
 				D7A5AE1F2422AC55006E2B27 /* CanvasViewContainerView.swift in Sources */,
 				D7A5ADE92422A613006E2B27 /* ContentView.swift in Sources */,
 				D7A5ADE72422A613006E2B27 /* Taavoli.xcdatamodeld in Sources */,

@@ -22,8 +22,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             self.environment.window = self.window
             
-            window?.rootViewController = UIHostingController(rootView: ContentView(isShown: false, image: nil).environmentObject(environment))
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            window?.rootViewController = UIHostingController(rootView:
+                ContentView(isShown: false, image: nil)
+                    .environmentObject(environment)
+                    .environment(\.managedObjectContext, context))
             self.window!.makeKeyAndVisible()
+            
+            
+            
+            
         }
     }
 

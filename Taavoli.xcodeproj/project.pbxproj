@@ -23,6 +23,11 @@
 		D7A5AE252422C0A2006E2B27 /* AlbumTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE242422C0A2006E2B27 /* AlbumTab.swift */; };
 		D7A5AE272422C0B3006E2B27 /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE262422C0B3006E2B27 /* CaptureImageView.swift */; };
 		D7A5AE292422C0C3006E2B27 /* PencilTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE282422C0C3006E2B27 /* PencilTab.swift */; };
+		D7A5AE2F2422DD4C006E2B27 /* DrawingModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE2D2422DD4C006E2B27 /* DrawingModel.xcdatamodeld */; };
+		D7A5AE302422E369006E2B27 /* DrawingModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE2D2422DD4C006E2B27 /* DrawingModel.xcdatamodeld */; };
+		D7A5AE312422E369006E2B27 /* DrawingModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE2D2422DD4C006E2B27 /* DrawingModel.xcdatamodeld */; };
+		D7A5AE342422E525006E2B27 /* Drawing+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE322422E525006E2B27 /* Drawing+CoreDataClass.swift */; };
+		D7A5AE352422E525006E2B27 /* Drawing+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE332422E525006E2B27 /* Drawing+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +70,9 @@
 		D7A5AE242422C0A2006E2B27 /* AlbumTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTab.swift; sourceTree = "<group>"; };
 		D7A5AE262422C0B3006E2B27 /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
 		D7A5AE282422C0C3006E2B27 /* PencilTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PencilTab.swift; sourceTree = "<group>"; };
+		D7A5AE2E2422DD4C006E2B27 /* DrawingModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DrawingModel.xcdatamodel; sourceTree = "<group>"; };
+		D7A5AE322422E525006E2B27 /* Drawing+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Drawing+CoreDataClass.swift"; path = "Taavoli/datamodels/Drawing+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D7A5AE332422E525006E2B27 /* Drawing+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Drawing+CoreDataProperties.swift"; path = "Taavoli/datamodels/Drawing+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +103,8 @@
 		D7A5ADD52422A613006E2B27 = {
 			isa = PBXGroup;
 			children = (
+				D7A5AE322422E525006E2B27 /* Drawing+CoreDataClass.swift */,
+				D7A5AE332422E525006E2B27 /* Drawing+CoreDataProperties.swift */,
 				D7A5ADE02422A613006E2B27 /* Taavoli */,
 				D7A5ADFA2422A618006E2B27 /* TaavoliTests */,
 				D7A5AE052422A618006E2B27 /* TaavoliUITests */,
@@ -115,6 +125,7 @@
 		D7A5ADE02422A613006E2B27 /* Taavoli */ = {
 			isa = PBXGroup;
 			children = (
+				D7A5AE2C2422DD25006E2B27 /* datamodels */,
 				D7A5AE212422ADAB006E2B27 /* common */,
 				D7A5AE142422A955006E2B27 /* views */,
 				D7A5ADE12422A613006E2B27 /* AppDelegate.swift */,
@@ -198,6 +209,14 @@
 				D7A5AE262422C0B3006E2B27 /* CaptureImageView.swift */,
 			);
 			path = photo;
+			sourceTree = "<group>";
+		};
+		D7A5AE2C2422DD25006E2B27 /* datamodels */ = {
+			isa = PBXGroup;
+			children = (
+				D7A5AE2D2422DD4C006E2B27 /* DrawingModel.xcdatamodeld */,
+			);
+			path = datamodels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,9 +352,12 @@
 				D7A5AE172422A970006E2B27 /* PencilCanvasSwUI.swift in Sources */,
 				D7A5AE292422C0C3006E2B27 /* PencilTab.swift in Sources */,
 				D7A5AE232422ADBB006E2B27 /* Environment.swift in Sources */,
+				D7A5AE342422E525006E2B27 /* Drawing+CoreDataClass.swift in Sources */,
+				D7A5AE352422E525006E2B27 /* Drawing+CoreDataProperties.swift in Sources */,
 				D7A5ADE22422A613006E2B27 /* AppDelegate.swift in Sources */,
 				D7A5AE252422C0A2006E2B27 /* AlbumTab.swift in Sources */,
 				D7A5AE1E2422AC55006E2B27 /* CanvasViewImpl.swift in Sources */,
+				D7A5AE2F2422DD4C006E2B27 /* DrawingModel.xcdatamodeld in Sources */,
 				D7A5ADE42422A613006E2B27 /* SceneDelegate.swift in Sources */,
 				D7A5AE272422C0B3006E2B27 /* CaptureImageView.swift in Sources */,
 				D7A5AE1F2422AC55006E2B27 /* CanvasViewContainerView.swift in Sources */,
@@ -348,6 +370,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7A5AE302422E369006E2B27 /* DrawingModel.xcdatamodeld in Sources */,
 				D7A5ADFC2422A618006E2B27 /* TaavoliTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,6 +379,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7A5AE312422E369006E2B27 /* DrawingModel.xcdatamodeld in Sources */,
 				D7A5AE072422A618006E2B27 /* TaavoliUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -674,6 +698,16 @@
 			);
 			currentVersion = D7A5ADE62422A613006E2B27 /* Taavoli.xcdatamodel */;
 			path = Taavoli.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		D7A5AE2D2422DD4C006E2B27 /* DrawingModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D7A5AE2E2422DD4C006E2B27 /* DrawingModel.xcdatamodel */,
+			);
+			currentVersion = D7A5AE2E2422DD4C006E2B27 /* DrawingModel.xcdatamodel */;
+			path = DrawingModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

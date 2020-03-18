@@ -8,10 +8,13 @@
 
 import Foundation
 import PencilKit
+import CoreData
 
 class CanvasViewImpl: PKCanvasView {
     
     private var timer: Timer! = nil
+    
+    private var drawingEntity: Drawing!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,5 +48,45 @@ class CanvasViewImpl: PKCanvasView {
         
         _ = self.becomeFirstResponder()
         #endif
+    }
+    
+    override public func becomeFirstResponder() -> Bool {
+        
+//        if self.drawingEntity == nil {
+//            let drawingEntity = NodeRepository.save(drawing: self.drawing.dataRepresentation())
+//            self.entity.drawing = drawingEntity
+//
+//        }
+//
+//        self.drawingEntity?.data = self.drawing.dataRepresentation()
+//
+//
+//        _ = NodeRepository.update()
+//
+        return super.becomeFirstResponder()
+    }
+    
+    private func load(entity: Drawing) {
+        
+//        do {
+//            if let data = entity.drawing?.data {
+//                self.drawing = try PKDrawing(data: data)
+//            } else {
+//                self.drawing = PKDrawing()
+//            }
+//        } catch {
+//            print("Error converting data to Drawing")
+//        }
+    
+    }
+    
+    public static func getEntity(context: NSManagedObjectContext) -> Drawing? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Drawing")
+        do {
+            return try context.fetch(fetchRequest).first as? Drawing
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        return nil
     }
 }

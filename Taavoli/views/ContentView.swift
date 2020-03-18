@@ -12,15 +12,6 @@ struct ContentView: View {
  
     var body: some View {
         TabView(selection: $selection){
-            PencilCanvas()
-                .font(.title)
-                .tabItem {
-                    VStack {
-                        Image(systemName: "pencil")
-                        Text("Drawing")
-                    }
-                }
-                .tag(0)
             Text("Photo")
             .font(.title)
             .tabItem {
@@ -29,7 +20,7 @@ struct ContentView: View {
                     Text("Photo")
                 }
             }
-            .tag(1)
+            .tag(0)
             Text("Album")
             .font(.title)
             .tabItem {
@@ -39,6 +30,15 @@ struct ContentView: View {
                 }
             }
             .tag(1)
+            PencilCanvas()
+            .font(.title)
+            .tabItem {
+                VStack {
+                    Image(systemName: "pencil")
+                    Text("Drawing")
+                }
+            }
+            .tag(2)
         }
     }
 }

@@ -12,7 +12,7 @@ struct ContentView: View {
  
     var body: some View {
         TabView(selection: $selection){
-            Text("Drawing")
+            PencilCanvas()
                 .font(.title)
                 .tabItem {
                     VStack {

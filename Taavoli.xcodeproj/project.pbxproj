@@ -16,6 +16,10 @@
 		D7A5ADF12422A618006E2B27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7A5ADEF2422A618006E2B27 /* LaunchScreen.storyboard */; };
 		D7A5ADFC2422A618006E2B27 /* TaavoliTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5ADFB2422A618006E2B27 /* TaavoliTests.swift */; };
 		D7A5AE072422A618006E2B27 /* TaavoliUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE062422A618006E2B27 /* TaavoliUITests.swift */; };
+		D7A5AE172422A970006E2B27 /* PencilCanvasSwUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE162422A970006E2B27 /* PencilCanvasSwUI.swift */; };
+		D7A5AE1E2422AC55006E2B27 /* CanvasViewImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE1C2422AC55006E2B27 /* CanvasViewImpl.swift */; };
+		D7A5AE1F2422AC55006E2B27 /* CanvasViewContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE1D2422AC55006E2B27 /* CanvasViewContainerView.swift */; };
+		D7A5AE232422ADBB006E2B27 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE222422ADBB006E2B27 /* Environment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,10 @@
 		D7A5AE022422A618006E2B27 /* TaavoliUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaavoliUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7A5AE062422A618006E2B27 /* TaavoliUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaavoliUITests.swift; sourceTree = "<group>"; };
 		D7A5AE082422A618006E2B27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7A5AE162422A970006E2B27 /* PencilCanvasSwUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PencilCanvasSwUI.swift; sourceTree = "<group>"; };
+		D7A5AE1C2422AC55006E2B27 /* CanvasViewImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewImpl.swift; sourceTree = "<group>"; };
+		D7A5AE1D2422AC55006E2B27 /* CanvasViewContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewContainerView.swift; sourceTree = "<group>"; };
+		D7A5AE222422ADBB006E2B27 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +109,8 @@
 		D7A5ADE02422A613006E2B27 /* Taavoli */ = {
 			isa = PBXGroup;
 			children = (
+				D7A5AE212422ADAB006E2B27 /* common */,
+				D7A5AE142422A955006E2B27 /* views */,
 				D7A5ADE12422A613006E2B27 /* AppDelegate.swift */,
 				D7A5ADE32422A613006E2B27 /* SceneDelegate.swift */,
 				D7A5ADE82422A613006E2B27 /* ContentView.swift */,
@@ -137,6 +147,32 @@
 				D7A5AE082422A618006E2B27 /* Info.plist */,
 			);
 			path = TaavoliUITests;
+			sourceTree = "<group>";
+		};
+		D7A5AE142422A955006E2B27 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				D7A5AE152422A960006E2B27 /* drawing */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		D7A5AE152422A960006E2B27 /* drawing */ = {
+			isa = PBXGroup;
+			children = (
+				D7A5AE1D2422AC55006E2B27 /* CanvasViewContainerView.swift */,
+				D7A5AE1C2422AC55006E2B27 /* CanvasViewImpl.swift */,
+				D7A5AE162422A970006E2B27 /* PencilCanvasSwUI.swift */,
+			);
+			path = drawing;
+			sourceTree = "<group>";
+		};
+		D7A5AE212422ADAB006E2B27 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				D7A5AE222422ADBB006E2B27 /* Environment.swift */,
+			);
+			path = common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,8 +305,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7A5AE172422A970006E2B27 /* PencilCanvasSwUI.swift in Sources */,
+				D7A5AE232422ADBB006E2B27 /* Environment.swift in Sources */,
 				D7A5ADE22422A613006E2B27 /* AppDelegate.swift in Sources */,
+				D7A5AE1E2422AC55006E2B27 /* CanvasViewImpl.swift in Sources */,
 				D7A5ADE42422A613006E2B27 /* SceneDelegate.swift in Sources */,
+				D7A5AE1F2422AC55006E2B27 /* CanvasViewContainerView.swift in Sources */,
 				D7A5ADE92422A613006E2B27 /* ContentView.swift in Sources */,
 				D7A5ADE72422A613006E2B27 /* Taavoli.xcdatamodeld in Sources */,
 			);

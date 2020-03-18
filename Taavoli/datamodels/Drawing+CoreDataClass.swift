@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-@objc(Drawing)
-public class Drawing: NSManagedObject {
+@objc(DrawingEntity)
+public class DrawingEntity: NSManagedObject {
 
 }

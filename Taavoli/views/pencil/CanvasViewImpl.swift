@@ -14,7 +14,7 @@ class CanvasViewImpl: PKCanvasView {
     
     private var timer: Timer! = nil
     
-    private var drawingEntity: Drawing!
+    private var drawingEntity: DrawingEntity!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,7 +66,7 @@ class CanvasViewImpl: PKCanvasView {
         return super.becomeFirstResponder()
     }
     
-    private func load(entity: Drawing) {
+    private func load(entity: DrawingEntity) {
         
 //        do {
 //            if let data = entity.drawing?.data {
@@ -80,10 +80,10 @@ class CanvasViewImpl: PKCanvasView {
     
     }
     
-    public static func getEntity(context: NSManagedObjectContext) -> Drawing? {
+    public static func getEntity(context: NSManagedObjectContext) -> DrawingEntity? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Drawing")
         do {
-            return try context.fetch(fetchRequest).first as? Drawing
+            return try context.fetch(fetchRequest).first as? DrawingEntity
         } catch let error {
             print(error.localizedDescription)
         }

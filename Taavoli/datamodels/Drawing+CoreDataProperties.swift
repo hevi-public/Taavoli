@@ -10,10 +10,10 @@ import Foundation
 import CoreData
 
 
-extension Drawing {
+extension DrawingEntity {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Drawing> {
-        return NSFetchRequest<Drawing>(entityName: "Drawing")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<DrawingEntity> {
+        return NSFetchRequest<DrawingEntity>(entityName: "DrawingEntity")
     }
 
     @NSManaged public var createdAt: Date?

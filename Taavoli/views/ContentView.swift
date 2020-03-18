@@ -15,13 +15,16 @@ struct ContentView: View {
  
     var body: some View {
         TabView(selection: $selection){
-            CaptureImageView(isShown: $isShown, image: $image).tabItem {
+            ZStack {
+                Text("Album")
+                CaptureImageView(isShown: $isShown, image: $image)
+            }.tabItem {
                 VStack {
                     Image(systemName: "camera.fill")
                     Text("Photo")
                 }
             }.tag(0)
-            AlbumTab().tabItem {
+            AlbumTab(isShown: $isShown, image: $image).tabItem {
                 VStack {
                     Image(systemName: "camera.on.rectangle.fill")
                     Text("Album")

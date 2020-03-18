@@ -157,23 +157,23 @@
 		D7A5AE142422A955006E2B27 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				D7A5AE152422A960006E2B27 /* drawing */,
+				D7A5AE2B2422C647006E2B27 /* photo */,
+				D7A5AE2A2422C637006E2B27 /* album */,
+				D7A5AE152422A960006E2B27 /* pencil */,
 				D7A5ADE82422A613006E2B27 /* ContentView.swift */,
-				D7A5AE242422C0A2006E2B27 /* AlbumTab.swift */,
-				D7A5AE262422C0B3006E2B27 /* PhotoTab.swift */,
-				D7A5AE282422C0C3006E2B27 /* PencilTab.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
 		};
-		D7A5AE152422A960006E2B27 /* drawing */ = {
+		D7A5AE152422A960006E2B27 /* pencil */ = {
 			isa = PBXGroup;
 			children = (
+				D7A5AE282422C0C3006E2B27 /* PencilTab.swift */,
 				D7A5AE1D2422AC55006E2B27 /* CanvasViewContainerView.swift */,
 				D7A5AE1C2422AC55006E2B27 /* CanvasViewImpl.swift */,
 				D7A5AE162422A970006E2B27 /* PencilCanvasSwUI.swift */,
 			);
-			path = drawing;
+			path = pencil;
 			sourceTree = "<group>";
 		};
 		D7A5AE212422ADAB006E2B27 /* common */ = {
@@ -182,6 +182,22 @@
 				D7A5AE222422ADBB006E2B27 /* Environment.swift */,
 			);
 			path = common;
+			sourceTree = "<group>";
+		};
+		D7A5AE2A2422C637006E2B27 /* album */ = {
+			isa = PBXGroup;
+			children = (
+				D7A5AE242422C0A2006E2B27 /* AlbumTab.swift */,
+			);
+			path = album;
+			sourceTree = "<group>";
+		};
+		D7A5AE2B2422C647006E2B27 /* photo */ = {
+			isa = PBXGroup;
+			children = (
+				D7A5AE262422C0B3006E2B27 /* PhotoTab.swift */,
+			);
+			path = photo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

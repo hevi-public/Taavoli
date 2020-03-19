@@ -23,6 +23,8 @@
 		D7A5AE252422C0A2006E2B27 /* AlbumTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE242422C0A2006E2B27 /* AlbumTab.swift */; };
 		D7A5AE272422C0B3006E2B27 /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE262422C0B3006E2B27 /* CaptureImageView.swift */; };
 		D7A5AE292422C0C3006E2B27 /* PencilTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE282422C0C3006E2B27 /* PencilTab.swift */; };
+		D7A5AE3E24241AE8006E2B27 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE3D24241AE8006E2B27 /* Repository.swift */; };
+		D7A5AE4024241B92006E2B27 /* NSManagedObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE3F24241B92006E2B27 /* NSManagedObjectExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
 		D7A5AE242422C0A2006E2B27 /* AlbumTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTab.swift; sourceTree = "<group>"; };
 		D7A5AE262422C0B3006E2B27 /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
 		D7A5AE282422C0C3006E2B27 /* PencilTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PencilTab.swift; sourceTree = "<group>"; };
+		D7A5AE3D24241AE8006E2B27 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		D7A5AE3F24241B92006E2B27 /* NSManagedObjectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +184,8 @@
 			isa = PBXGroup;
 			children = (
 				D7A5AE222422ADBB006E2B27 /* Environment.swift */,
+				D7A5AE3D24241AE8006E2B27 /* Repository.swift */,
+				D7A5AE3F24241B92006E2B27 /* NSManagedObjectExtension.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -337,10 +343,12 @@
 				D7A5AE252422C0A2006E2B27 /* AlbumTab.swift in Sources */,
 				D7A5AE1E2422AC55006E2B27 /* CanvasViewImpl.swift in Sources */,
 				D7A5ADE42422A613006E2B27 /* SceneDelegate.swift in Sources */,
+				D7A5AE4024241B92006E2B27 /* NSManagedObjectExtension.swift in Sources */,
 				D7A5AE272422C0B3006E2B27 /* CaptureImageView.swift in Sources */,
 				D7A5AE1F2422AC55006E2B27 /* CanvasViewContainerView.swift in Sources */,
 				D7A5ADE92422A613006E2B27 /* ContentView.swift in Sources */,
 				D7A5ADE72422A613006E2B27 /* Taavoli.xcdatamodeld in Sources */,
+				D7A5AE3E24241AE8006E2B27 /* Repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

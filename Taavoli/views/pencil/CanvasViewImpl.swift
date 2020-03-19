@@ -34,6 +34,13 @@ class CanvasViewImpl: PKCanvasView {
         #if !targetEnvironment(macCatalyst)
         self.allowsFingerDrawing = true
         #endif
+        
+        // TODO: cancel timer when not needed
+        self.timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
+            
+            self.drawingEntity.data = self.drawing.dataRepresentation()
+            ManagedObjectContext.update()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -41,6 +48,8 @@ class CanvasViewImpl: PKCanvasView {
     }
     
     public func setup(window: UIWindow, drawingEntity: DrawingEntity) {
+        self.drawingEntity = drawingEntity
+        
         do {
             if let data = drawingEntity.data {
                 self.drawing = try PKDrawing(data: data)
@@ -62,17 +71,17 @@ class CanvasViewImpl: PKCanvasView {
     
     override public func becomeFirstResponder() -> Bool {
         
-//        if self.drawingEntity == nil {
-//            let drawingEntity = NodeRepository.save(drawing: self.drawing.dataRepresentation())
-//            self.entity.drawing = drawingEntity
-//
-//        }
-//
-//        self.drawingEntity?.data = self.drawing.dataRepresentation()
-//
-//
-//        _ = NodeRepository.update()
-//
+        //        if self.drawingEntity == nil {
+        //            let drawingEntity = NodeRepository.save(drawing: self.drawing.dataRepresentation())
+        //            self.entity.drawing = drawingEntity
+        //
+        //        }
+        //
+        //        self.drawingEntity?.data = self.drawing.dataRepresentation()
+        //
+        //
+        //        _ = NodeRepository.update()
+        //
         return super.becomeFirstResponder()
     }
     

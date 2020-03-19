@@ -10,22 +10,26 @@ import SwiftUI
 
 struct PencilCanvas: View {
     
-    @EnvironmentObject var environment: Environment
+    @Binding var drawingEntity: DrawingEntity
+    
+    @Environment var environment: EnvironmentObject
     
     var body: some View {
-        PKCanvasUIKit()
+        PKCanvasUIKit(drawingEntity: $drawingEntity, environment: _environment)
     }
 }
 
 struct PKCanvasUIKit : UIViewRepresentable {
     
-    @EnvironmentObject var environment: Environment
+    @Binding var drawingEntity: DrawingEntity
+    
+    @Environment var environment: EnvironmentObject
     
     func makeUIView(context: Context) -> CanvasViewImpl {
         
         let canvas = CanvasViewImpl()
         if let window = environment.window {
-            canvas.setup(window: window)
+            canvas.setup(window: window, drawingEntity: drawingEntity)
         }
         return canvas
     }

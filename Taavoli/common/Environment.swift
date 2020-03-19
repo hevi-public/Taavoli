@@ -9,6 +9,6 @@ import Foundation
 import Combine
 import UIKit
 
-class Environment: ObservableObject {
+class EnvironmentObject: ObservableObject {
     var window: UIWindow?
 }

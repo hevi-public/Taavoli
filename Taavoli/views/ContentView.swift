@@ -14,7 +14,7 @@ struct ContentView: View {
     @State var image: Image?
  
     var body: some View {
-        TabView(selection: $selection){
+        TabView(selection: $selection) {
             ZStack {
                 Text("Album")
                 CaptureImageView(isShown: $isShown, image: $image)

@@ -40,7 +40,9 @@ class CanvasViewImpl: PKCanvasView {
         super.init(coder: coder)
     }
     
-    public func setup(window: UIWindow) {
+    public func setup(window: UIWindow, drawingEntity: DrawingEntity) {
+        self.load(entity: self.drawingEntity)
+        
         #if !targetEnvironment(macCatalyst)
         guard let toolPicker = PKToolPicker.shared(for: window) else { return }
         toolPicker.setVisible(true, forFirstResponder: self)

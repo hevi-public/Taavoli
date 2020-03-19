@@ -12,7 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    var environment = Environment()
+    var environmentObject = EnvironmentObject()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
@@ -20,12 +20,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             self.window = UIWindow(windowScene: windowScene)
             
-            self.environment.window = self.window
+            self.environmentObject.window = self.window
             
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
             window?.rootViewController = UIHostingController(rootView:
                 ContentView(isShown: false, image: nil)
-                    .environmentObject(environment)
+                    .environmentObject(environmentObject)
                     .environment(\.managedObjectContext, context))
             self.window!.makeKeyAndVisible()
             

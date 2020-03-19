@@ -41,7 +41,15 @@ class CanvasViewImpl: PKCanvasView {
     }
     
     public func setup(window: UIWindow, drawingEntity: DrawingEntity) {
-        self.load(entity: self.drawingEntity)
+        do {
+            if let data = drawingEntity.data {
+                self.drawing = try PKDrawing(data: data)
+            } else {
+                self.drawing = PKDrawing()
+            }
+        } catch {
+            print("Error converting data to Drawing")
+        }
         
         #if !targetEnvironment(macCatalyst)
         guard let toolPicker = PKToolPicker.shared(for: window) else { return }
@@ -68,19 +76,6 @@ class CanvasViewImpl: PKCanvasView {
         return super.becomeFirstResponder()
     }
     
-    private func load(entity: DrawingEntity) {
-        
-//        do {
-//            if let data = entity.drawing?.data {
-//                self.drawing = try PKDrawing(data: data)
-//            } else {
-//                self.drawing = PKDrawing()
-//            }
-//        } catch {
-//            print("Error converting data to Drawing")
-//        }
-    
-    }
     
     public static func getEntity(context: NSManagedObjectContext) -> DrawingEntity? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Drawing")

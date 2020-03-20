@@ -30,6 +30,7 @@ class ImageUIScrollViewController: UIViewController {
         print("GraphController viewDidLoad")
 
         self.view.addSubview(scrollView)
+        self.view.backgroundColor = .black
 
         scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true

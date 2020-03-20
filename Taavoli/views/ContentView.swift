@@ -15,49 +15,45 @@ struct ContentView: View {
     @State var image: Image?
     
     var body: some View {
-        ZStack {
-            TabView(selection: $selection) {
-                VStack {
-                    Spacer()
-                    Button(action: {
-                        self.isCameraShown.toggle()
-                    }) {
+        NavigationView {
+            ZStack {
+                TabView(selection: $selection) {
+                    VStack {
+                        Spacer()
+                        
+                        NavigationLink(destination: CaptureImageView(isCameraShown: Binding<Bool>.constant(true), isAlbumShown: Binding<Bool>.constant(false), image: $image)) {
+                            VStack {
+                                Image(systemName: "camera.fill")
+                                Text("Take picture")
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        NavigationLink(destination: CaptureImageView(isCameraShown: Binding<Bool>.constant(false), isAlbumShown: Binding<Bool>.constant(true), image: $image)) {
+                            VStack {
+                                Image(systemName: "camera.on.rectangle.fill")
+                                Text("Album")
+                            }
+                        }
+                        
+                        Spacer()
+                    }.tabItem {
                         VStack {
                             Image(systemName: "camera.fill")
-                            Text("Take picture")
+                            Text("Photo")
                         }
-                    }.padding()
-                    Spacer()
-                    Button(action: {
-                        self.isAlbumShown.toggle()
-                    }) {
+                    }.tag(0)
+                    PencilTab().tabItem {
                         VStack {
-                            Image(systemName: "camera.on.rectangle.fill")
-                            Text("Album")
+                            Image(systemName: "pencil")
+                            Text("Drawing")
                         }
-                    }.padding()
-                    Spacer()
-                }.tabItem {
-                    VStack {
-                        Image(systemName: "camera.fill")
-                        Text("Photo")
-                    }
-                }.tag(0)
-                PencilTab().tabItem {
-                    VStack {
-                        Image(systemName: "pencil")
-                        Text("Drawing")
-                    }
-                }.tag(1)
-            }
-            if isCameraShown {
-                CaptureImageView(isCameraShown: $isCameraShown, isAlbumShown: $isAlbumShown, image: $image)
-            }
-            if isAlbumShown {
-                CaptureImageView(isCameraShown: $isCameraShown, isAlbumShown: $isAlbumShown, image: $image)
-            }
-            if image != nil {
-                ImageUIScrollViewControllerRepresentable()
+                    }.tag(1)
+                }
+                if image != nil {
+                    ImageUIScrollViewControllerRepresentable()
+                }
             }
         }
     }

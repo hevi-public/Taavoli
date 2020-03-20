@@ -24,6 +24,7 @@ struct CaptureImageView: UIViewControllerRepresentable {
         picker.delegate = context.coordinator
         if isCameraShown {
             picker.sourceType = .camera
+            picker.cameraFlashMode = .auto
         } else {
             picker.sourceType = .savedPhotosAlbum
         }

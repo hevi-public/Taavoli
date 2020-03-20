@@ -16,6 +16,7 @@ class ImageUIScrollView: UIScrollView {
             guard let size = imageView?.image?.size else { return }
             self.contentSize = CGSize(width: size.width, height: size.height)
             self.contentOffset = CGPoint(x: size.width / 2, y: size.height / 2)
+            self.setZoomScale()
         }
     }
     
@@ -83,37 +84,49 @@ class ImageUIScrollView: UIScrollView {
             setContentOffset(bottomOffset, animated: true)
         }
     }
+    
+    func setZoomScale() {
+        guard let imageView = imageView else { return }
+        let imageViewSize = imageView.bounds.size
+        let scrollViewSize = self.bounds.size
+        let widthScale = scrollViewSize.width / imageViewSize.width
+        let heightScale = scrollViewSize.height / imageViewSize.height
+            
+        self.minimumZoomScale = min(widthScale, heightScale)
+        self.zoomScale = 1.0
+    }
+    
 }
 
 extension ImageUIScrollView: UIScrollViewDelegate {
-//    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-//        return self.imageView
-//    }
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self.imageView
+    }
+
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        self.centerImage()
+    }
+
+    func setMaxMinZoomScaleForCurrentBounds() {
+        guard let imageSize = self.imageView?.bounds.size else { return }
+        let boundsSize = self.bounds.size
+
+        let xScale =  boundsSize.width  / imageSize.width
+        let yScale = boundsSize.height / imageSize.height
+        let minScale = min(xScale, yScale)
+
+//        var maxScale: CGFloat = 5.0
+//        if minScale < 0.1 {
+//            maxScale = 0.3
+//        }
+//        if minScale >= 0.1 && minScale < 0.5 {
+//            maxScale = 0.7
+//        }
+//        if minScale >= 0.5 {
+//            maxScale = max(1.0, minScale)
+//        }
 //
-//    func scrollViewDidZoom(_ scrollView: UIScrollView) {
-//        self.centerImage()
-//    }
-//
-//    func setMaxMinZoomScaleForCurrentBounds() {
-//        guard let imageSize = self.imageView?.bounds.size else { return }
-//        let boundsSize = self.bounds.size
-//
-//        let xScale =  boundsSize.width  / imageSize.width
-//        let yScale = boundsSize.height / imageSize.height
-//        let minScale = min(xScale, yScale)
-//
-////        var maxScale: CGFloat = 5.0
-////        if minScale < 0.1 {
-////            maxScale = 0.3
-////        }
-////        if minScale >= 0.1 && minScale < 0.5 {
-////            maxScale = 0.7
-////        }
-////        if minScale >= 0.5 {
-////            maxScale = max(1.0, minScale)
-////        }
-////
-//        self.maximumZoomScale = 6
-//        self.minimumZoomScale = minScale
-//    }
+        self.maximumZoomScale = 6
+        self.minimumZoomScale = minScale
+    }
 }

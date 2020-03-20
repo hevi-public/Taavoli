@@ -17,6 +17,7 @@ class ImageUIScrollView: UIScrollView {
             self.contentSize = CGSize(width: size.width, height: size.height)
             self.contentOffset = CGPoint(x: size.width / 2, y: size.height / 2)
             self.setZoomScale()
+            self.zoomScale = self.minimumZoomScale
         }
     }
     

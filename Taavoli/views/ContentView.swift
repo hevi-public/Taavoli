@@ -40,10 +40,11 @@ struct ContentView: View {
                 }
                 
                 if isCameraShown {
-                    CaptureImageView(isShown: $isCameraShown, image: $image)
+                    CaptureImageView(isCameraShown: $isCameraShown, isAlbumShown: $isAlbumShown, image: $image)
                 }
                 if isAlbumShown {
-                    AlbumTab(isShown: $isAlbumShown, image: $image)
+                    CaptureImageView(isCameraShown: $isCameraShown, isAlbumShown: $isAlbumShown, image: $image)
+//                    AlbumTab(isShown: $isAlbumShown, image: $image)
                 }
                 if image != nil {
                     ImageUIScrollViewControllerRepresentable()

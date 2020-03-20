@@ -10,17 +10,23 @@ import UIKit
 
 struct CaptureImageView: UIViewControllerRepresentable {
     
-    @Binding var isShown: Bool
+    
+    @Binding var isCameraShown: Bool
+    @Binding var isAlbumShown: Bool
     @Binding var image: Image?
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(isShown: $isShown, image: $image)
+        return Coordinator(isCameraShown: $isCameraShown, isAlbumShown: $isAlbumShown , image: $image)
     }
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<CaptureImageView>) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
-        picker.sourceType = .camera
+        if isCameraShown {
+            picker.sourceType = .camera
+        } else {
+            picker.sourceType = .savedPhotosAlbum
+        }
         return picker
     }
     
@@ -32,13 +38,15 @@ struct CaptureImageView: UIViewControllerRepresentable {
 
 class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    @Binding var isCoordinatorShown: Bool
+    @Binding var isCoordinatorCameraShown: Bool
+    @Binding var isCoordinatorAlbumShown: Bool
     @Binding var imageInCoordinator: Image?
     
     @ObservedObject var observed: MyObservableObject = MyObservableObject.instance
     
-    init(isShown: Binding<Bool>, image: Binding<Image?>) {
-        _isCoordinatorShown = isShown
+    init(isCameraShown: Binding<Bool>, isAlbumShown: Binding<Bool>, image: Binding<Image?>) {
+        _isCoordinatorCameraShown = isCameraShown
+        _isCoordinatorAlbumShown = isAlbumShown
         _imageInCoordinator = image
     }
     
@@ -46,12 +54,14 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let unwrapImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         imageInCoordinator = Image(uiImage: unwrapImage)
-        isCoordinatorShown = false
+        isCoordinatorCameraShown = false
+        isCoordinatorAlbumShown = false
         observed.image = unwrapImage
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        isCoordinatorShown = false
+        isCoordinatorCameraShown = false
+        isCoordinatorAlbumShown = false
     }
 }
 

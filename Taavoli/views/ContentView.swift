@@ -10,19 +10,40 @@ import SwiftUI
 struct ContentView: View {
     @State private var selection = 0
     
-    @State var isShown: Bool
+    @State var isCameraShown: Bool
+    @State var isAlbumShown: Bool
     @State var image: Image?
- 
+    
     var body: some View {
         TabView(selection: $selection) {
             ZStack {
-                Button(action: {
-                    self.isShown.toggle()
-                }) {
-                    Text("Take picture")
+                VStack {
+                    Spacer()
+                    Button(action: {
+                        self.isCameraShown.toggle()
+                    }) {
+                        VStack {
+                            Image(systemName: "camera.fill")
+                            Text("Take picture")
+                        }
+                    }.padding()
+                    Spacer()
+                    Button(action: {
+                        self.isAlbumShown.toggle()
+                    }) {
+                        VStack {
+                            Image(systemName: "camera.on.rectangle.fill")
+                            Text("Album")
+                        }
+                    }.padding()
+                    Spacer()
                 }
-                if isShown {
-                    CaptureImageView(isShown: $isShown, image: $image)
+                
+                if isCameraShown {
+                    CaptureImageView(isShown: $isCameraShown, image: $image)
+                }
+                if isAlbumShown {
+                    AlbumTab(isShown: $isAlbumShown, image: $image)
                 }
                 if image != nil {
                     ImageUIScrollViewControllerRepresentable()
@@ -33,24 +54,18 @@ struct ContentView: View {
                     Text("Photo")
                 }
             }.tag(0)
-            AlbumTab(isShown: $isShown, image: $image).tabItem {
-                VStack {
-                    Image(systemName: "camera.on.rectangle.fill")
-                    Text("Album")
-                }
-            }.tag(1)
             PencilTab().tabItem {
                 VStack {
                     Image(systemName: "pencil")
                     Text("Drawing")
                 }
-            }.tag(2)
+            }.tag(1)
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(isShown: false)
+        ContentView(isCameraShown: false, isAlbumShown: false, image: nil)
     }
 }

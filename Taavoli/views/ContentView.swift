@@ -15,8 +15,8 @@ struct ContentView: View {
     @State var image: Image?
     
     var body: some View {
-        TabView(selection: $selection) {
-            ZStack {
+        ZStack {
+            TabView(selection: $selection) {
                 VStack {
                     Spacer()
                     Button(action: {
@@ -37,30 +37,28 @@ struct ContentView: View {
                         }
                     }.padding()
                     Spacer()
-                }
-                
-                if isCameraShown {
-                    CaptureImageView(isCameraShown: $isCameraShown, isAlbumShown: $isAlbumShown, image: $image)
-                }
-                if isAlbumShown {
-                    CaptureImageView(isCameraShown: $isCameraShown, isAlbumShown: $isAlbumShown, image: $image)
-//                    AlbumTab(isShown: $isAlbumShown, image: $image)
-                }
-                if image != nil {
-                    ImageUIScrollViewControllerRepresentable()
-                }
-            }.tabItem {
-                VStack {
-                    Image(systemName: "camera.fill")
-                    Text("Photo")
-                }
-            }.tag(0)
-            PencilTab().tabItem {
-                VStack {
-                    Image(systemName: "pencil")
-                    Text("Drawing")
-                }
-            }.tag(1)
+                }.tabItem {
+                    VStack {
+                        Image(systemName: "camera.fill")
+                        Text("Photo")
+                    }
+                }.tag(0)
+                PencilTab().tabItem {
+                    VStack {
+                        Image(systemName: "pencil")
+                        Text("Drawing")
+                    }
+                }.tag(1)
+            }
+            if isCameraShown {
+                CaptureImageView(isCameraShown: $isCameraShown, isAlbumShown: $isAlbumShown, image: $image)
+            }
+            if isAlbumShown {
+                CaptureImageView(isCameraShown: $isCameraShown, isAlbumShown: $isAlbumShown, image: $image)
+            }
+            if image != nil {
+                ImageUIScrollViewControllerRepresentable()
+            }
         }
     }
 }

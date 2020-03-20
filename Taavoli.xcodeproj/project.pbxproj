@@ -25,6 +25,11 @@
 		D7A5AE292422C0C3006E2B27 /* PencilTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE282422C0C3006E2B27 /* PencilTab.swift */; };
 		D7A5AE3E24241AE8006E2B27 /* ManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE3D24241AE8006E2B27 /* ManagedObjectContext.swift */; };
 		D7A5AE4024241B92006E2B27 /* NSManagedObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE3F24241B92006E2B27 /* NSManagedObjectExtension.swift */; };
+		D7A5AE492424417F006E2B27 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE462424417E006E2B27 /* ImageView.swift */; };
+		D7A5AE4A2424417F006E2B27 /* ImageUIScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE472424417E006E2B27 /* ImageUIScrollViewController.swift */; };
+		D7A5AE4B2424417F006E2B27 /* ImageUIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE482424417F006E2B27 /* ImageUIScrollView.swift */; };
+		D7A5AE4D24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE4C24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift */; };
+		D7A5AE502425520B006E2B27 /* MyObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE4F2425520B006E2B27 /* MyObservableObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +74,11 @@
 		D7A5AE282422C0C3006E2B27 /* PencilTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PencilTab.swift; sourceTree = "<group>"; };
 		D7A5AE3D24241AE8006E2B27 /* ManagedObjectContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectContext.swift; sourceTree = "<group>"; };
 		D7A5AE3F24241B92006E2B27 /* NSManagedObjectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectExtension.swift; sourceTree = "<group>"; };
+		D7A5AE462424417E006E2B27 /* ImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		D7A5AE472424417E006E2B27 /* ImageUIScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUIScrollViewController.swift; sourceTree = "<group>"; };
+		D7A5AE482424417F006E2B27 /* ImageUIScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUIScrollView.swift; sourceTree = "<group>"; };
+		D7A5AE4C24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUIScrollViewControllerRepresentable.swift; sourceTree = "<group>"; };
+		D7A5AE4F2425520B006E2B27 /* MyObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyObservableObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +171,7 @@
 		D7A5AE142422A955006E2B27 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				D7A5AE41242430D2006E2B27 /* imageScrollView */,
 				D7A5AE2B2422C647006E2B27 /* photo */,
 				D7A5AE2A2422C637006E2B27 /* album */,
 				D7A5AE152422A960006E2B27 /* pencil */,
@@ -186,6 +197,7 @@
 				D7A5AE222422ADBB006E2B27 /* Environment.swift */,
 				D7A5AE3D24241AE8006E2B27 /* ManagedObjectContext.swift */,
 				D7A5AE3F24241B92006E2B27 /* NSManagedObjectExtension.swift */,
+				D7A5AE4F2425520B006E2B27 /* MyObservableObject.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -204,6 +216,25 @@
 				D7A5AE262422C0B3006E2B27 /* CaptureImageView.swift */,
 			);
 			path = photo;
+			sourceTree = "<group>";
+		};
+		D7A5AE41242430D2006E2B27 /* imageScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				D7A5AE4E24254A99006E2B27 /* impl */,
+				D7A5AE4C24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift */,
+			);
+			path = imageScrollView;
+			sourceTree = "<group>";
+		};
+		D7A5AE4E24254A99006E2B27 /* impl */ = {
+			isa = PBXGroup;
+			children = (
+				D7A5AE472424417E006E2B27 /* ImageUIScrollViewController.swift */,
+				D7A5AE482424417F006E2B27 /* ImageUIScrollView.swift */,
+				D7A5AE462424417E006E2B27 /* ImageView.swift */,
+			);
+			path = impl;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,16 +370,21 @@
 				D7A5AE172422A970006E2B27 /* PencilCanvasSwUI.swift in Sources */,
 				D7A5AE292422C0C3006E2B27 /* PencilTab.swift in Sources */,
 				D7A5AE232422ADBB006E2B27 /* Environment.swift in Sources */,
+				D7A5AE4B2424417F006E2B27 /* ImageUIScrollView.swift in Sources */,
 				D7A5ADE22422A613006E2B27 /* AppDelegate.swift in Sources */,
 				D7A5AE252422C0A2006E2B27 /* AlbumTab.swift in Sources */,
+				D7A5AE492424417F006E2B27 /* ImageView.swift in Sources */,
 				D7A5AE1E2422AC55006E2B27 /* CanvasViewImpl.swift in Sources */,
 				D7A5ADE42422A613006E2B27 /* SceneDelegate.swift in Sources */,
 				D7A5AE4024241B92006E2B27 /* NSManagedObjectExtension.swift in Sources */,
 				D7A5AE272422C0B3006E2B27 /* CaptureImageView.swift in Sources */,
 				D7A5AE1F2422AC55006E2B27 /* CanvasViewContainerView.swift in Sources */,
+				D7A5AE4D24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift in Sources */,
 				D7A5ADE92422A613006E2B27 /* ContentView.swift in Sources */,
+				D7A5AE4A2424417F006E2B27 /* ImageUIScrollViewController.swift in Sources */,
 				D7A5ADE72422A613006E2B27 /* Taavoli.xcdatamodeld in Sources */,
 				D7A5AE3E24241AE8006E2B27 /* ManagedObjectContext.swift in Sources */,
+				D7A5AE502425520B006E2B27 /* MyObservableObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

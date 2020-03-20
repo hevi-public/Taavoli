@@ -16,8 +16,17 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selection) {
             ZStack {
-                Text("Album")
-                CaptureImageView(isShown: $isShown, image: $image)
+                Button(action: {
+                    self.isShown.toggle()
+                }) {
+                    Text("Take picture")
+                }
+                if isShown {
+                    CaptureImageView(isShown: $isShown, image: $image)
+                }
+                if image != nil {
+                    ImageUIScrollViewControllerRepresentable()
+                }
             }.tabItem {
                 VStack {
                     Image(systemName: "camera.fill")

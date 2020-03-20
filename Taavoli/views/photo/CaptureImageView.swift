@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct CaptureImageView: UIViewControllerRepresentable {
     
@@ -34,6 +35,8 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
     @Binding var isCoordinatorShown: Bool
     @Binding var imageInCoordinator: Image?
     
+    @ObservedObject var observed: MyObservableObject = MyObservableObject.instance
+    
     init(isShown: Binding<Bool>, image: Binding<Image?>) {
         _isCoordinatorShown = isShown
         _imageInCoordinator = image
@@ -43,11 +46,12 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let unwrapImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         imageInCoordinator = Image(uiImage: unwrapImage)
-        print(unwrapImage.size)
         isCoordinatorShown = false
+        observed.image = unwrapImage
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         isCoordinatorShown = false
     }
 }
+

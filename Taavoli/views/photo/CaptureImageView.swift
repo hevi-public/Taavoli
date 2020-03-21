@@ -15,8 +15,11 @@ struct CaptureImageView: UIViewControllerRepresentable {
     @Binding var isAlbumShown: Bool
     @Binding var image: Image?
     
+    @Binding var shouldDisplayCaptureImageView: Bool
+    @Binding var shouldDisplayAlbumView: Bool
+    
     func makeCoordinator() -> Coordinator {
-        return Coordinator(isCameraShown: $isCameraShown, isAlbumShown: $isAlbumShown , image: $image)
+        return Coordinator(isCameraShown: $isCameraShown, isAlbumShown: $isAlbumShown , image: $image, shouldDisplayCaptureImageView: $shouldDisplayCaptureImageView, shouldDisplayAlbumView: $shouldDisplayAlbumView)
     }
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<CaptureImageView>) -> UIImagePickerController {
@@ -43,12 +46,19 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
     @Binding var isCoordinatorAlbumShown: Bool
     @Binding var imageInCoordinator: Image?
     
+    @Binding var shouldDisplayCaptureImageView: Bool
+    @Binding var shouldDisplayAlbumView: Bool
+    
     @ObservedObject var observed: MyObservableObject = MyObservableObject.instance
     
-    init(isCameraShown: Binding<Bool>, isAlbumShown: Binding<Bool>, image: Binding<Image?>) {
+    init(isCameraShown: Binding<Bool>, isAlbumShown: Binding<Bool>, image: Binding<Image?>, shouldDisplayCaptureImageView: Binding<Bool>, shouldDisplayAlbumView: Binding<Bool>) {
         _isCoordinatorCameraShown = isCameraShown
         _isCoordinatorAlbumShown = isAlbumShown
         _imageInCoordinator = image
+        
+        _shouldDisplayCaptureImageView = shouldDisplayCaptureImageView
+        _shouldDisplayAlbumView = shouldDisplayAlbumView
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController,
@@ -58,11 +68,22 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
         isCoordinatorCameraShown = false
         isCoordinatorAlbumShown = false
         observed.image = unwrapImage
+        
+        self.shouldDisplayCaptureImageView = false
+        self.shouldDisplayAlbumView = false
+        
+            
+        
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         isCoordinatorCameraShown = false
         isCoordinatorAlbumShown = false
+    
+        self.shouldDisplayCaptureImageView = false
+        self.shouldDisplayAlbumView = false
+    
     }
 }
 

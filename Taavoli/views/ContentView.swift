@@ -14,6 +14,22 @@ struct ContentView: View {
     @State var isAlbumShown: Bool
     @State var image: Image?
     
+    @State var shouldDisplayCaptureImageView: Bool = false
+    @State var shouldDisplayAlbumView: Bool = false
+    
+    var isCameraActive: Bool {
+        get {
+            isCameraShown && !isAlbumShown && shouldDisplayCaptureImageView
+        }
+    }
+    
+    var isAlbumActive: Bool {
+        get {
+            isAlbumShown && !isCameraShown && shouldDisplayAlbumView
+        }
+    }
+    
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -21,20 +37,24 @@ struct ContentView: View {
                     VStack {
                         Spacer()
                         
-                        NavigationLink(destination: CaptureImageView(isCameraShown: Binding<Bool>.constant(true), isAlbumShown: Binding<Bool>.constant(false), image: $image)) {
-                            VStack {
-                                Image(systemName: "camera.fill")
-                                Text("Take picture")
-                            }
+                        NavigationLink(
+                            destination: CaptureImageView(isCameraShown: Binding<Bool>.constant(true), isAlbumShown: Binding<Bool>.constant(false), image: $image, shouldDisplayCaptureImageView: $shouldDisplayCaptureImageView, shouldDisplayAlbumView: $shouldDisplayAlbumView),
+                            isActive: $shouldDisplayCaptureImageView) {
+                                VStack {
+                                    Image(systemName: "camera.fill")
+                                    Text("Take picture")
+                                }
                         }
                         
                         Spacer()
                         
-                        NavigationLink(destination: CaptureImageView(isCameraShown: Binding<Bool>.constant(false), isAlbumShown: Binding<Bool>.constant(true), image: $image)) {
-                            VStack {
-                                Image(systemName: "camera.on.rectangle.fill")
-                                Text("Album")
-                            }
+                        NavigationLink(
+                            destination: CaptureImageView(isCameraShown: Binding<Bool>.constant(false), isAlbumShown: Binding<Bool>.constant(true), image: $image, shouldDisplayCaptureImageView: $shouldDisplayCaptureImageView, shouldDisplayAlbumView: $shouldDisplayAlbumView),
+                            isActive: $shouldDisplayCaptureImageView) {
+                                VStack {
+                                    Image(systemName: "camera.on.rectangle.fill")
+                                    Text("Album")
+                                }
                         }
                         
                         Spacer()
@@ -54,13 +74,20 @@ struct ContentView: View {
                 if image != nil {
                     ImageUIScrollViewControllerRepresentable()
                 }
-            }
+            }.navigationBarItems(
+                trailing: Button(action: {
+//                    self.showingChildView = true
+                    
+                }) {
+                    Text("Next")
+                }
+            )
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(isCameraShown: false, isAlbumShown: false, image: nil)
+        ContentView(isCameraShown: false, isAlbumShown: false, image: nil, shouldDisplayCaptureImageView: false)
     }
 }

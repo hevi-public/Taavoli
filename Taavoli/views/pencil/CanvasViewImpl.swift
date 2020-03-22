@@ -11,7 +11,7 @@ import PencilKit
 import CoreData
 import Combine
 
-class CanvasViewImpl: PKCanvasView {
+class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     
     
     
@@ -24,10 +24,14 @@ class CanvasViewImpl: PKCanvasView {
     
     private var cancellables: [Cancellable] = []
     
+    private var _delegate: CanvasViewDelegate!
+    var isEditing: Bool = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-//        self.delegate = self
+        self._delegate = CanvasViewDelegate(self)
+        self.delegate = self._delegate
         
         let height = 500000
         let width = 500000
@@ -46,19 +50,26 @@ class CanvasViewImpl: PKCanvasView {
         #endif
         
         // TODO: cancel timer when not needed
-        self.updateTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
-
-//            if !self.lockUpdates {
-//                self.drawing = self.convertToDrawing(drawingEntity: self.drawingEntity)
-//            } else {
-                self.drawingEntity.data = self.drawing.dataRepresentation()
-                ManagedObjectContext.update()
-//            }
-        }
+//        self.updateTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
+//
+////            if !self.lockUpdates {
+////                self.drawing = self.convertToDrawing(drawingEntity: self.drawingEntity)
+////            } else {
+//            self.update()
+////            }
+//        }
+        
+        
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    func update() {
+        self.drawingEntity.data = self.drawing.dataRepresentation()
+        self.drawingEntity.updatedAt = Date()
+        ManagedObjectContext.update()
     }
     
     public func setup(window: UIWindow, drawingEntity: DrawingEntity) {
@@ -77,9 +88,17 @@ class CanvasViewImpl: PKCanvasView {
         self.cancellables.append(
             NotificationCenter.Publisher(center: .default, name: .cloudUpdated).sink { notification in
                 
-                let newObject = ManagedObjectContext.get(id: self.drawingEntity.objectID)
-                self.drawingEntity = newObject
-                self.drawing = self.convertToDrawing(drawingEntity: drawingEntity)
+                if !self.isEditing {
+                    let newObject = ManagedObjectContext.get(id: self.drawingEntity.objectID)
+                    
+                    if let u1 = self.drawingEntity.updatedAt,
+                        let u2 = newObject?.updatedAt {
+                        if (u1 < u2) {
+                            self.drawingEntity = newObject
+                            self.drawing = self.convertToDrawing(drawingEntity: drawingEntity)
+                        }
+                    }
+                }
             }
         )
     }
@@ -123,18 +142,28 @@ class CanvasViewImpl: PKCanvasView {
     }
 }
 
-extension CanvasViewImpl: PKCanvasViewDelegate {
+class CanvasViewDelegate: NSObject, PKCanvasViewDelegate {
+    
+    private let canvasView: CanvasViewImpl
+    
+    init(_ canvasView: CanvasViewImpl) {
+        self.canvasView = canvasView
+    }
     
     func canvasViewDidBeginUsingTool(_ canvasView: PKCanvasView) {
-        
+        self.canvasView.isEditing = true
     }
     
     func canvasViewDidEndUsingTool(_ canvasView: PKCanvasView) {
+        self.canvasView.isEditing = false
         
     }
     
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-        
+        guard let canvasView = canvasView as? CanvasViewImpl else { return }
+        DispatchQueue.main.async {
+            canvasView.update()
+        }
     }
     
     func canvasViewDidFinishRendering(_ canvasView: PKCanvasView) {

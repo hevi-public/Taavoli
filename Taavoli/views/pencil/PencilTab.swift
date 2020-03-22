@@ -20,9 +20,9 @@ struct PencilTab: View {
     
     var body: some View {
         NavigationView {
-            List(drawings) { nodeEntity in
-                NavigationLink(destination: PencilCanvas(drawingEntity: nodeEntity)) {
-                    Text("asfssdsd")
+            List(drawings) { drawingEntity in
+                NavigationLink(destination: PencilCanvas(drawingEntity: drawingEntity)) {
+                    Text(drawingEntity.updatedAt?.description ?? "")
                 }
             
                 
@@ -31,6 +31,9 @@ struct PencilTab: View {
                     do {
                         guard let entity =  NSEntityDescription.entity(forEntityName: "DrawingEntity", in: self.managedObjectContext) else { return }
                         let drawingEntity = DrawingEntity(entity: entity, insertInto: self.managedObjectContext)
+                        
+                        drawingEntity.createdAt = Date()
+                        drawingEntity.updatedAt = drawingEntity.createdAt
                         
                         self.managedObjectContext.insert(drawingEntity)
                         

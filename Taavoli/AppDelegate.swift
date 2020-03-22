@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         */
         let container = NSPersistentCloudKitContainer(name: "Taavoli")
         
-        container.viewContext.mergePolicy = NSMergePolicy.overwrite
+        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {

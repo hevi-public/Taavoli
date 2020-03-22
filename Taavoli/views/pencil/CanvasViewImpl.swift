@@ -12,15 +12,20 @@ import CoreData
 
 class CanvasViewImpl: PKCanvasView {
     
-    private var timer: Timer! = nil
+    
     
     private var drawingEntity: DrawingEntity!
+    
+    private var updateTimer: Timer! = nil
+    private var lockUpdatingCanvasTimer: Timer?
+    
+    private var lockUpdates: Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let height = 5000
-        let width = 5000
+        let height = 500000
+        let width = 500000
         self.contentSize = CGSize(width: width, height: height)
         
         let centerContentOffsetX = (self.contentSize.width / 2) - (self.bounds.size.width / 2)
@@ -32,14 +37,18 @@ class CanvasViewImpl: PKCanvasView {
         self.zoomScale = 0.2
         
         #if !targetEnvironment(macCatalyst)
-        self.allowsFingerDrawing = true
+        self.allowsFingerDrawing = false
         #endif
         
         // TODO: cancel timer when not needed
-        self.timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
-            
-            self.drawingEntity.data = self.drawing.dataRepresentation()
-            ManagedObjectContext.update()
+        self.updateTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
+
+//            if !self.lockUpdates {
+//                self.drawing = self.convertToDrawing(drawingEntity: self.drawingEntity)
+//            } else {
+                self.drawingEntity.data = self.drawing.dataRepresentation()
+                ManagedObjectContext.update()
+//            }
         }
     }
     
@@ -50,15 +59,7 @@ class CanvasViewImpl: PKCanvasView {
     public func setup(window: UIWindow, drawingEntity: DrawingEntity) {
         self.drawingEntity = drawingEntity
         
-        do {
-            if let data = drawingEntity.data {
-                self.drawing = try PKDrawing(data: data)
-            } else {
-                self.drawing = PKDrawing()
-            }
-        } catch {
-            print("Error converting data to Drawing")
-        }
+        self.drawing = self.convertToDrawing(drawingEntity: drawingEntity)
         
         #if !targetEnvironment(macCatalyst)
         guard let toolPicker = PKToolPicker.shared(for: window) else { return }
@@ -94,5 +95,16 @@ class CanvasViewImpl: PKCanvasView {
             print(error.localizedDescription)
         }
         return nil
+    }
+    
+    private func convertToDrawing(drawingEntity: DrawingEntity) -> PKDrawing {
+        do {
+            if let data = drawingEntity.data {
+                return try PKDrawing(data: data)
+            }
+        } catch {
+            print("Error converting data to Drawing")
+        }
+        return PKDrawing()
     }
 }

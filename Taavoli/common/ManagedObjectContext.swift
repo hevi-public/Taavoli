@@ -15,6 +15,11 @@ class ManagedObjectContext {
     public static func update() {
         do {
             if context.hasChanges {
+                
+                context.updatedObjects.forEach { (entity) in
+                    (entity as? DrawingEntity)?.updatedAt = Date()
+                }
+                
                 try context.save()
             }
         } catch {

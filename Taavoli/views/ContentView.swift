@@ -31,58 +31,7 @@ struct ContentView: View {
     
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                TabView(selection: $selection) {
-                    VStack {
-                        Spacer()
-                        
-                        NavigationLink(
-                            destination: CaptureImageView(isCameraShown: Binding<Bool>.constant(true), isAlbumShown: Binding<Bool>.constant(false), image: $image, shouldDisplayCaptureImageView: $shouldDisplayCaptureImageView, shouldDisplayAlbumView: $shouldDisplayAlbumView),
-                            isActive: $shouldDisplayCaptureImageView) {
-                                VStack {
-                                    Image(systemName: "camera.fill")
-                                    Text("Take picture")
-                                }
-                        }
-                        
-                        Spacer()
-                        
-                        NavigationLink(
-                            destination: CaptureImageView(isCameraShown: Binding<Bool>.constant(false), isAlbumShown: Binding<Bool>.constant(true), image: $image, shouldDisplayCaptureImageView: $shouldDisplayCaptureImageView, shouldDisplayAlbumView: $shouldDisplayAlbumView),
-                            isActive: $shouldDisplayCaptureImageView) {
-                                VStack {
-                                    Image(systemName: "camera.on.rectangle.fill")
-                                    Text("Album")
-                                }
-                        }
-                        
-                        Spacer()
-                    }.tabItem {
-                        VStack {
-                            Image(systemName: "camera.fill")
-                            Text("Photo")
-                        }
-                    }.tag(0)
-                    PencilTab().tabItem {
-                        VStack {
-                            Image(systemName: "pencil")
-                            Text("Drawing")
-                        }
-                    }.tag(1)
-                }
-                if image != nil {
-                    ImageUIScrollViewControllerRepresentable()
-                }
-            }.navigationBarItems(
-                trailing: Button(action: {
-//                    self.showingChildView = true
-                    
-                }) {
-                    Text("Next")
-                }
-            )
-        }
+        PencilTab()
     }
 }
 

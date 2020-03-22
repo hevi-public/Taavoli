@@ -16,13 +16,15 @@ struct PencilTab: View {
     
     @EnvironmentObject var environment: AppEnvironment
     
-    @FetchRequest(entity: DrawingEntity.entity(), sortDescriptors: [], predicate: nil) var drawings: FetchedResults<DrawingEntity>
+//    @FetchRequest(entity: DrawingEntity.entity(), sortDescriptors: [], predicate: nil) var drawings: FetchedResults<DrawingEntity>
     
     var body: some View {
         NavigationView {
-            List(drawings) { drawingEntity in
+            List(environment.drawings) { drawingEntity in
                 NavigationLink(destination: PencilCanvas(drawingEntity: drawingEntity)) {
                     Text(drawingEntity.updatedAt?.description ?? "")
+                }.onTapGesture {
+                    self.environment.update()
                 }
             
                 

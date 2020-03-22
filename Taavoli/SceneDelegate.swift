@@ -7,18 +7,30 @@
 
 import UIKit
 import SwiftUI
+import Combine
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
     var environmentObject = AppEnvironment()
+    
+    var cancellables: [Cancellable] = []
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
         
         if let windowScene = scene as? UIWindowScene {
             self.window = UIWindow(windowScene: windowScene)
+            
+            self.cancellables.append(
+                NotificationCenter.Publisher(center: .default, name: .cloudUpdated).sink { notification in
+                    DispatchQueue.main.async {
+                        self.environmentObject.update()
+                    }
+                    
+                }
+            )
             
             self.environmentObject.window = self.window
             

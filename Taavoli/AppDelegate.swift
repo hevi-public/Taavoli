@@ -52,7 +52,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         */
         let container = NSPersistentCloudKitContainer(name: "Taavoli")
         
+        guard let description = container.persistentStoreDescriptions.first else {
+            fatalError("###\(#function): Failed to retrieve a persistent store description.")
+        }
+        description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        
         container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.someFunction),
+            name: .NSPersistentStoreRemoteChange, object: nil)
+        
+        
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -88,6 +100,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    @objc private func someFunction() {
+        print("____ASSADQWJDQWOIDIOJQWDIJOWQJDIOWQIJDQWIDIOQWDIJQWDIJWQIOJDJQWID_________!@*(&#!*@&#(*!@&#(*&!@#*&!@(*#&!*(@#&!@*&#!@")
+        NotificationCenter.default.post(name: .cloudUpdated, object: nil, userInfo: nil)
+    }
 
+}
+
+extension Notification.Name {
+    static let cloudUpdated = Notification.Name("cloudUpdated")
 }
 

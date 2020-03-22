@@ -26,4 +26,20 @@ class ManagedObjectContext {
             print("Problem while updating drawing")
         }
     }
+    
+    public static func getAllEntity(predicate: NSPredicate? = nil, sortDescriptors: [NSSortDescriptor] = []) -> [DrawingEntity] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DrawingEntity")
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = sortDescriptors
+        do {
+            return try context.fetch(fetchRequest) as! [DrawingEntity]
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        return []
+    }
+    
+    public static func get(id: NSManagedObjectID) -> DrawingEntity? {
+        return context.object(with: id) as? DrawingEntity
+    }
 }

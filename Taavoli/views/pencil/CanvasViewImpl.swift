@@ -9,6 +9,7 @@
 import Foundation
 import PencilKit
 import CoreData
+import Combine
 
 class CanvasViewImpl: PKCanvasView {
     
@@ -21,8 +22,12 @@ class CanvasViewImpl: PKCanvasView {
     
     private var lockUpdates: Bool = false
     
+    private var cancellables: [Cancellable] = []
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+//        self.delegate = self
         
         let height = 500000
         let width = 500000
@@ -68,6 +73,15 @@ class CanvasViewImpl: PKCanvasView {
         
         _ = self.becomeFirstResponder()
         #endif
+        
+        self.cancellables.append(
+            NotificationCenter.Publisher(center: .default, name: .cloudUpdated).sink { notification in
+                
+                let newObject = ManagedObjectContext.get(id: self.drawingEntity.objectID)
+                self.drawingEntity = newObject
+                self.drawing = self.convertToDrawing(drawingEntity: drawingEntity)
+            }
+        )
     }
     
     override public func becomeFirstResponder() -> Bool {
@@ -107,4 +121,24 @@ class CanvasViewImpl: PKCanvasView {
         }
         return PKDrawing()
     }
+}
+
+extension CanvasViewImpl: PKCanvasViewDelegate {
+    
+    func canvasViewDidBeginUsingTool(_ canvasView: PKCanvasView) {
+        
+    }
+    
+    func canvasViewDidEndUsingTool(_ canvasView: PKCanvasView) {
+        
+    }
+    
+    func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
+        
+    }
+    
+    func canvasViewDidFinishRendering(_ canvasView: PKCanvasView) {
+        
+    }
+    
 }

@@ -29,6 +29,7 @@
 		D7A5AE4B2424417F006E2B27 /* ImageUIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE482424417F006E2B27 /* ImageUIScrollView.swift */; };
 		D7A5AE4D24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE4C24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift */; };
 		D7A5AE502425520B006E2B27 /* MyObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE4F2425520B006E2B27 /* MyObservableObject.swift */; };
+		D7D05A822427780D0088C1AB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7D05A812427780D0088C1AB /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,8 @@
 		D7A5AE482424417F006E2B27 /* ImageUIScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUIScrollView.swift; sourceTree = "<group>"; };
 		D7A5AE4C24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUIScrollViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		D7A5AE4F2425520B006E2B27 /* MyObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyObservableObject.swift; sourceTree = "<group>"; };
+		D7D05A7F242778080088C1AB /* Taavoli.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Taavoli.entitlements; sourceTree = "<group>"; };
+		D7D05A812427780D0088C1AB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7D05A822427780D0088C1AB /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +115,7 @@
 				D7A5ADFA2422A618006E2B27 /* TaavoliTests */,
 				D7A5AE052422A618006E2B27 /* TaavoliUITests */,
 				D7A5ADDF2422A613006E2B27 /* Products */,
+				D7D05A802427780D0088C1AB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,6 +132,7 @@
 		D7A5ADE02422A613006E2B27 /* Taavoli */ = {
 			isa = PBXGroup;
 			children = (
+				D7D05A7F242778080088C1AB /* Taavoli.entitlements */,
 				D7A5AE212422ADAB006E2B27 /* common */,
 				D7A5AE142422A955006E2B27 /* views */,
 				D7A5ADE12422A613006E2B27 /* AppDelegate.swift */,
@@ -224,6 +230,14 @@
 				D7A5AE462424417E006E2B27 /* ImageView.swift */,
 			);
 			path = impl;
+			sourceTree = "<group>";
+		};
+		D7D05A802427780D0088C1AB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D7D05A812427780D0088C1AB /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -537,6 +551,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Taavoli/Taavoli.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Taavoli/Preview Content\"";
 				DEVELOPMENT_TEAM = 7VSX9U5N94;
@@ -557,6 +572,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Taavoli/Taavoli.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Taavoli/Preview Content\"";
 				DEVELOPMENT_TEAM = 7VSX9U5N94;

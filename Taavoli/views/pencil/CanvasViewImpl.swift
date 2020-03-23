@@ -67,9 +67,11 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     }
     
     func update() {
-        self.drawingEntity.data = self.drawing.dataRepresentation()
-        self.drawingEntity.updatedAt = Date()
-        ManagedObjectContext.update()
+        DispatchQueue.main.async {
+            self.drawingEntity.data = self.drawing.dataRepresentation()
+            self.drawingEntity.updatedAt = Date()
+            ManagedObjectContext.update()
+        }
     }
     
     public func setup(window: UIWindow, drawingEntity: DrawingEntity) {
@@ -84,23 +86,6 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
         
         _ = self.becomeFirstResponder()
         #endif
-        
-        self.cancellables.append(
-            NotificationCenter.Publisher(center: .default, name: .cloudUpdated).sink { notification in
-                
-                if !self.isEditing {
-                    let newObject = ManagedObjectContext.get(id: self.drawingEntity.objectID)
-                    
-                    if let u1 = self.drawingEntity.updatedAt,
-                        let u2 = newObject?.updatedAt {
-                        if (u1 < u2) {
-                            self.drawingEntity = newObject
-                            self.drawing = self.convertToDrawing(drawingEntity: drawingEntity)
-                        }
-                    }
-                }
-            }
-        )
     }
     
     override public func becomeFirstResponder() -> Bool {
@@ -161,9 +146,7 @@ class CanvasViewDelegate: NSObject, PKCanvasViewDelegate {
     
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
         guard let canvasView = canvasView as? CanvasViewImpl else { return }
-        DispatchQueue.main.async {
-            canvasView.update()
-        }
+        canvasView.update()
     }
     
     func canvasViewDidFinishRendering(_ canvasView: PKCanvasView) {

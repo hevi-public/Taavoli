@@ -23,8 +23,6 @@ struct PencilTab: View {
             List(environment.drawings) { drawingEntity in
                 NavigationLink(destination: PencilCanvas(drawingEntity: drawingEntity)) {
                     Text(drawingEntity.updatedAt?.description ?? "")
-                }.onTapGesture {
-                    self.environment.update()
                 }
             
                 

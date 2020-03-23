@@ -23,15 +23,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             self.window = UIWindow(windowScene: windowScene)
             
-            self.cancellables.append(
-                NotificationCenter.Publisher(center: .default, name: .cloudUpdated).sink { notification in
-                    DispatchQueue.main.async {
-                        self.environmentObject.update()
-                    }
-                    
-                }
-            )
-            
             self.environmentObject.window = self.window
             
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -40,10 +31,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     .environmentObject(environmentObject)
                     .environment(\.managedObjectContext, context))
             self.window!.makeKeyAndVisible()
-            
-            
-            
-            
         }
     }
 

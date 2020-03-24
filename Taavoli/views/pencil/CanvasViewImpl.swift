@@ -79,7 +79,7 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
                 
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 
-                let json = DrawingRequest(title: "my title")
+                let json = DrawingRequest(drawingData: self.drawing.dataRepresentation())
                 let encoder = JSONEncoder()
                 let jsonData = try encoder.encode(json)
                 
@@ -187,11 +187,9 @@ class CanvasViewDelegate: NSObject, PKCanvasViewDelegate {
 }
 
 struct DrawingRequest: Codable {
-    let id: Int?
-    let title: String
+    let drawingData: Data
     
-    init(id: Int? = nil, title: String) {
-        self.id = id
-        self.title = title
+    init(drawingData: Data) {
+        self.drawingData = drawingData
     }
 }

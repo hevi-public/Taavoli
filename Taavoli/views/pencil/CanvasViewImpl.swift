@@ -50,14 +50,14 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
         #endif
         
         // TODO: cancel timer when not needed
-//        self.updateTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
-//
-////            if !self.lockUpdates {
-////                self.drawing = self.convertToDrawing(drawingEntity: self.drawingEntity)
-////            } else {
-//            self.update()
-////            }
-//        }
+        //        self.updateTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
+        //
+        ////            if !self.lockUpdates {
+        ////                self.drawing = self.convertToDrawing(drawingEntity: self.drawingEntity)
+        ////            } else {
+        //            self.update()
+        ////            }
+        //        }
         
         
     }
@@ -68,9 +68,40 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     
     func update() {
         DispatchQueue.main.async {
-            self.drawingEntity.data = self.drawing.dataRepresentation()
-            self.drawingEntity.updatedAt = Date()
-            ManagedObjectContext.update()
+            do {
+                self.drawingEntity.data = self.drawing.dataRepresentation()
+                self.drawingEntity.updatedAt = Date()
+                ManagedObjectContext.update()
+                
+                let url = URL(string: "http://Hevi-MacBook-Pro.local:8080")!
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                let json = DrawingRequest(title: "my title")
+                let encoder = JSONEncoder()
+                let jsonData = try encoder.encode(json)
+                
+                request.httpBody = jsonData
+                
+//                print(request.debugDescription)
+                
+                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                    guard let data = data, error == nil else {
+                        print(error?.localizedDescription ?? "No data")
+                        return
+                    }
+                    let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+                    if let responseJSON = responseJSON as? [String: Any] {
+                        print("ResponseJSON: " + responseJSON.description)
+                    }
+                }
+                
+                task.resume()
+            } catch {
+                print(error)
+            }
         }
     }
     
@@ -153,4 +184,14 @@ class CanvasViewDelegate: NSObject, PKCanvasViewDelegate {
         
     }
     
+}
+
+struct DrawingRequest: Codable {
+    let id: Int?
+    let title: String
+    
+    init(id: Int? = nil, title: String) {
+        self.id = id
+        self.title = title
+    }
 }

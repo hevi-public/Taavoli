@@ -68,5 +68,24 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    
+    <!-- allow non secure http connection -->
+    <key>NSAppTransportSecurity</key>
+      <dict>
+          <key>NSAllowsArbitraryLoads</key>
+          <true/>
+          <key>NSExceptionDomains</key>
+          <dict>
+              <key>Hevi-MacBook-Pro.local</key>
+              <dict>
+                  <key>NSIncludesSubdomains</key>
+                  <true/>
+                  <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+                  <false/>
+              </dict>
+         </dict>
+    </dict>
+    <!-- #end allow non secure http connection -->
+    
 </dict>
 </plist>

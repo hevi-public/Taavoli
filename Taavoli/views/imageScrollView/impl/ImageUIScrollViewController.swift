@@ -23,9 +23,6 @@ class ImageUIScrollViewController: UIViewController {
     private lazy var scrollView: ImageUIScrollView = {
         let view = ImageUIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentSize.height = 50000
-        view.contentSize.width = 50000
-        
         view.frame = self.view.frame
         return view
     }()

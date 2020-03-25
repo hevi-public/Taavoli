@@ -11,47 +11,53 @@ import UIKit
 
 class ImageUIScrollView: UIScrollView {
     
-    var imageView: ImageView? {
-        didSet {
-            guard let size = imageView?.image?.size else { return }
-            self.contentSize = CGSize(width: size.width, height: size.height)
-            self.contentOffset = CGPoint(x: size.width / 2, y: size.height / 2)
-            self.setZoomScale()
-            self.zoomScale = self.minimumZoomScale
-        }
-    }
+    var imageView: ImageView?
     
     func display(_ image: UIImage) {
         
         if self.imageView == nil {
-            let imageView = ImageView(image: image)
-            self.addSubview(imageView)
+            self.imageView = ImageView(image: image)
+            self.addSubview(imageView!)
         }
         
 //        self.imageView?.removeFromSuperview()
 //        self.imageView = nil
         
+        self.imageView?.image = nil
         self.imageView?.image = image
+        
+        
+        
+        guard let size = imageView?.image?.size else { return }
+        self.contentSize = CGSize(width: size.width, height: size.height)
+        self.contentOffset = CGPoint(x: size.width / 2, y: size.height / 2)
+        self.setZoomScale()
+        self.zoomScale = self.minimumZoomScale
+        
+        self.setup()
         
         
     }
     
     func setup() {
-        
+         
         self.delegate = self
 //        self.zoomScale = 1
+        
+        self.contentSize.height = 50000
+        self.contentSize.width = 50000
         
 //        self.contentSize = CGSize(width: 5000, height: 5000)
 //        self.contentOffset = CGPoint(x: 2500, y: 2500)
         
-        self.translatesAutoresizingMaskIntoConstraints = false
+//        self.translatesAutoresizingMaskIntoConstraints = false
         
-        self.maximumZoomScale = 5
-        self.minimumZoomScale = 0.005
-        self.zoomScale = 0.2
+//        self.maximumZoomScale = 5
+//        self.minimumZoomScale = 0.005
+//        self.zoomScale = 0.2
         
-//        self.setMaxMinZoomScaleForCurrentBounds()
-        self.centerImage()
+        self.setMaxMinZoomScaleForCurrentBounds()
+//        self.centerImage()
 
         
     }

@@ -33,8 +33,8 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
         self._delegate = CanvasViewDelegate(self)
         self.delegate = self._delegate
         
-        let height = 500000
-        let width = 500000
+        let height = 50000
+        let width = 50000
         self.contentSize = CGSize(width: width, height: height)
         
         let centerContentOffsetX = (self.contentSize.width / 2) - (self.bounds.size.width / 2)

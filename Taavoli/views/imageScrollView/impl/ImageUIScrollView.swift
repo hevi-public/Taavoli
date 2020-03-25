@@ -21,26 +21,34 @@ class ImageUIScrollView: UIScrollView {
         }
     }
     
-    func display(_ imageView: ImageView) {
+    func display(_ image: UIImage) {
         
-        self.imageView?.removeFromSuperview()
-        self.imageView = nil
+        if self.imageView == nil {
+            let imageView = ImageView(image: image)
+            self.addSubview(imageView)
+        }
         
-        self.imageView = imageView
-        self.addSubview(imageView)
+//        self.imageView?.removeFromSuperview()
+//        self.imageView = nil
+        
+        self.imageView?.image = image
+        
         
     }
     
     func setup() {
         
         self.delegate = self
-        self.zoomScale = 1
+//        self.zoomScale = 1
         
 //        self.contentSize = CGSize(width: 5000, height: 5000)
 //        self.contentOffset = CGPoint(x: 2500, y: 2500)
         
         self.translatesAutoresizingMaskIntoConstraints = false
         
+        self.maximumZoomScale = 5
+        self.minimumZoomScale = 0.005
+        self.zoomScale = 0.2
         
 //        self.setMaxMinZoomScaleForCurrentBounds()
         self.centerImage()

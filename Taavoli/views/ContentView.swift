@@ -31,7 +31,17 @@ struct ContentView: View {
     
     
     var body: some View {
-        PencilTab()
+        TabView {
+            PencilTab().tabItem {
+                Image(systemName: "list.dash")
+                Text("Menu")
+            }
+            ImageUIScrollViewControllerRepresentable().tabItem {
+                Image(systemName: "list.dash")
+                Text("Client")
+            }
+        }
+        
     }
 }
 

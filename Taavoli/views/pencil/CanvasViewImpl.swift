@@ -13,7 +13,7 @@ import Combine
 
 class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     
-    
+    let websocket = true
     
     private var drawingEntity: DrawingEntity!
     
@@ -73,32 +73,51 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
                 self.drawingEntity.updatedAt = Date()
                 ManagedObjectContext.update()
                 
-                let url = URL(string: "http://Hevi-MacBook-Pro.local:8080")!
-                var request = URLRequest(url: url)
-                request.httpMethod = "POST"
                 
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 
-                let json = DrawingRequest(drawingData: self.drawing.dataRepresentation())
-                let encoder = JSONEncoder()
-                let jsonData = try encoder.encode(json)
+                if websocket {
+                    let urlSession = URLSession(configuration: .default)
                 
-                request.httpBody = jsonData
-                
-//                print(request.debugDescription)
-                
-                let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                    guard let data = data, error == nil else {
-                        print(error?.localizedDescription ?? "No data")
-                        return
+                    let webSocketTask = urlSession.webSocketTask(with: URL(string: "ws://Hevi-MacBook-Pro.local:8080/echo")!)
+                    
+                    let message = URLSessionWebSocketTask.Message.string("Hello Socket")
+                    webSocketTask.send(message) { error in
+                        
+                        if let error = error {
+                            print("WebSocket sending error: \(error)")
+                        }
                     }
-                    let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-                    if let responseJSON = responseJSON as? [String: Any] {
-                        print("ResponseJSON: " + responseJSON.description)
+                    webSocketTask.resume()
+                    
+                } else {
+                
+                    let url = URL(string: "http://Hevi-MacBook-Pro.local:8080")!
+                    var request = URLRequest(url: url)
+                    request.httpMethod = "POST"
+                    
+                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                    
+                    let json = DrawingRequest(drawingData: self.drawing.dataRepresentation())
+                    let encoder = JSONEncoder()
+                    let jsonData = try encoder.encode(json)
+                    
+                    request.httpBody = jsonData
+                    
+    //                print(request.debugDescription)
+                    
+                    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                        guard let data = data, error == nil else {
+                            print(error?.localizedDescription ?? "No data")
+                            return
+                        }
+                        let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+                        if let responseJSON = responseJSON as? [String: Any] {
+                            print("ResponseJSON: " + responseJSON.description)
+                        }
                     }
+                    
+                    task.resume()
                 }
-                
-                task.resume()
             } catch {
                 print(error)
             }

@@ -20,6 +20,8 @@ class ImageUIScrollView: UIScrollView {
             self.addSubview(imageView!)
         }
         
+        let contentOffset = self.contentOffset
+        
 //        self.imageView?.removeFromSuperview()
 //        self.imageView = nil
         
@@ -28,15 +30,18 @@ class ImageUIScrollView: UIScrollView {
         
         
         
-        guard let size = imageView?.image?.size else { return }
-        self.contentSize = CGSize(width: size.width, height: size.height)
-        self.contentOffset = CGPoint(x: size.width / 2, y: size.height / 2)
+//        guard let size = imageView?.image?.size else { return }
+//        self.contentSize = CGSize(width: size.width, height: size.height)
+        
+        
         self.setZoomScale()
         self.zoomScale = self.minimumZoomScale
         
         self.setup()
         
-        
+        self.contentSize.height = 50000
+        self.contentSize.width = 50000
+        self.contentOffset = contentOffset
     }
     
     func setup() {

@@ -51,7 +51,7 @@ class ImageUIScrollViewController: UIViewController {
         
         webSocket = WebSocket(request: URLRequest(url: webSocketUrl))
         webSocket.delegate = self
-        webSocket.connect()
+        webSocket.connect(maximumLength: 10000000)
  
         
         

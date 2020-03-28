@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,6 +29,7 @@
 		D7A5AE4B2424417F006E2B27 /* ImageUIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE482424417F006E2B27 /* ImageUIScrollView.swift */; };
 		D7A5AE4D24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE4C24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift */; };
 		D7A5AE502425520B006E2B27 /* MyObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE4F2425520B006E2B27 /* MyObservableObject.swift */; };
+		D7AB879F242F9F03003B0C58 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D7AB879E242F9F03003B0C58 /* Starscream */; };
 		D7D05A822427780D0088C1AB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7D05A812427780D0088C1AB /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7D05A822427780D0088C1AB /* CloudKit.framework in Frameworks */,
+				D7AB879F242F9F03003B0C58 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +258,9 @@
 			dependencies = (
 			);
 			name = Taavoli;
+			packageProductDependencies = (
+				D7AB879E242F9F03003B0C58 /* Starscream */,
+			);
 			productName = Taavoli;
 			productReference = D7A5ADDE2422A613006E2B27 /* Taavoli.app */;
 			productType = "com.apple.product-type.application";
@@ -327,6 +332,9 @@
 				Base,
 			);
 			mainGroup = D7A5ADD52422A613006E2B27;
+			packageReferences = (
+				D7AB879D242F9F03003B0C58 /* XCRemoteSwiftPackageReference "Starscream" */,
+			);
 			productRefGroup = D7A5ADDF2422A613006E2B27 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -713,6 +721,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D7AB879D242F9F03003B0C58 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D7AB879E242F9F03003B0C58 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D7AB879D242F9F03003B0C58 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		D7A5ADE52422A613006E2B27 /* Taavoli.xcdatamodeld */ = {

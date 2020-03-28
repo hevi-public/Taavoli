@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import PencilKit
+import Starscream
 
 class ImageUIScrollViewController: UIViewController {
     
@@ -29,6 +30,9 @@ class ImageUIScrollViewController: UIViewController {
     
     private var timer: Timer? = nil
     
+    let webSocketUrl = URL(string: "ws://Hevi-MacBook-Pro.local:8080/drawing")!
+    var webSocket: WebSocket!
+    
     override func viewDidLoad() {
         print("GraphController viewDidLoad")
         
@@ -45,59 +49,12 @@ class ImageUIScrollViewController: UIViewController {
         self.view.isMultipleTouchEnabled = true
         //        self.imageView.isMultipleTouchEnabled = true
         
+        webSocket = WebSocket(request: URLRequest(url: webSocketUrl))
+        webSocket.delegate = self
+        webSocket.connect()
+ 
         
-        self.createUpdater()
         
-        
-    }
-    
-    
-    private func createUpdater() {
-        
-        self.timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true, block: { (timer) in
-            
-            
-            
-            let url = URL(string: "http://Hevi-MacBook-Pro.local:8080")!
-            var request = URLRequest(url: url)
-            
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                guard let data = data, error == nil else {
-                    print(error?.localizedDescription ?? "No data")
-                    return
-                }
-                
-               
-                
-                
-                
-                
-                
-                
-                if let responseJSON = try? JSONDecoder().decode([DrawingRequest].self, from: data) {
-                
-                    //                    print("ResponseJSON: " + responseJSON.description)
-                    
-                    let last = responseJSON.last
-                    if let drawingData = last?.drawingData {
-                                
-                        DispatchQueue.main.async {
-                            do {
-                                let drawing = try PKDrawing(data: drawingData)
-                                let image = drawing.image(from: drawing.bounds, scale: 1.0)
-                                self.display(image)
-                            } catch {
-                                print("error converting to pkdrawing")
-                            }
-                        }
-                        
-                    }
-                }
-            }
-            
-            task.resume()
-            
-        })
     }
     
     override func viewWillLayoutSubviews() {
@@ -111,3 +68,42 @@ class ImageUIScrollViewController: UIViewController {
     }
 }
 
+extension ImageUIScrollViewController: WebSocketDelegate {
+    func didReceive(event: WebSocketEvent, client: WebSocket) {
+        switch event {
+        case .connected(let headers):
+//            isConnected = true
+            print("websocket is connected: \(headers)")
+        case .disconnected(let reason, let code):
+//            isConnected = false
+            print("websocket is disconnected: \(reason) with code: \(code)")
+        case .text(let string):
+            print("Received text: \(string)")
+        case .binary(let data):
+            print("Received data: \(data.count)")
+            do {
+                let drawing = try PKDrawing(data: data)
+                let image = drawing.image(from: drawing.bounds, scale: 1.0)
+                self.display(image)
+            } catch {
+                print(error)
+            }
+            
+        case .ping(_):
+            break
+        case .pong(_):
+            break
+        case .viablityChanged(_):
+            break
+        case .reconnectSuggested(_):
+            break
+        case .cancelled:
+//            isConnected = false
+            break
+        case .error(let error):
+//            isConnected = false
+//            handleError(error)
+            break
+        }
+    }
+}

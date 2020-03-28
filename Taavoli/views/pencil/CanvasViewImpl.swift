@@ -14,6 +14,8 @@ import Combine
 class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     
     let websocket = true
+    let websocketUrl = URL(string: "ws://Hevi-MacBook-Pro.local:8080/drawing")!
+    var webSocketTask: URLSessionWebSocketTask!
     
     private var drawingEntity: DrawingEntity!
     
@@ -49,6 +51,8 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
         self.allowsFingerDrawing = false
         #endif
         
+        self.webSocketTask = URLSession(configuration: .default).webSocketTask(with: self.websocketUrl)
+        
         // TODO: cancel timer when not needed
         //        self.updateTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
         //
@@ -75,19 +79,20 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
                 
                 
                 
-                if websocket {
-                    let urlSession = URLSession(configuration: .default)
-                
-                    let webSocketTask = urlSession.webSocketTask(with: URL(string: "ws://Hevi-MacBook-Pro.local:8080/echo")!)
+                if self.websocket {
                     
-                    let message = URLSessionWebSocketTask.Message.string("Hello Socket")
-                    webSocketTask.send(message) { error in
+                    let drawingRequest = DrawingRequest(drawingData: self.drawing.dataRepresentation())
+                    let encoder = JSONEncoder()
+                    let jsonData = try encoder.encode(drawingRequest)
+                    
+                    let message = URLSessionWebSocketTask.Message.data(self.drawing.dataRepresentation())
+                    self.webSocketTask.send(message) { error in
                         
                         if let error = error {
                             print("WebSocket sending error: \(error)")
                         }
                     }
-                    webSocketTask.resume()
+                    self.webSocketTask.resume()
                     
                 } else {
                 

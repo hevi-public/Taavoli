@@ -32,6 +32,9 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     
     fileprivate var justReceivedData: Bool = false
     
+    private var state: TransmissionState = .none
+    private var chunks: [Data] = []
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -57,7 +60,7 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
         let request = URLRequest(url: webSocketUrl)
         webSocket = WebSocket(request: request)
         webSocket.delegate = self
-        webSocket.connect(maximumLength: 10000000)
+        webSocket.connect()
         
         // TODO: cancel timer when not needed
         //        self.updateTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
@@ -79,10 +82,27 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     func update() {
         
         do {
-            let drawingRequest = DrawingRequest(drawingData: self.drawing.dataRepresentation())
-            let encoder = JSONEncoder()
-            let jsonData = try encoder.encode(drawingRequest)
-            webSocket.write(data: jsonData)
+            
+            
+            
+            
+            let sendChunks = chunkData(data: self.drawing.dataRepresentation())
+            webSocket.write(string: "transmission_start")
+        
+            var i = 0
+            try sendChunks.forEach { (chunk) in
+                let drawingRequest = DrawingRequest(index: i, drawingData: chunk)
+                let encoder = JSONEncoder()
+                let jsonData = try encoder.encode(drawingRequest)
+                webSocket.write(data: jsonData)
+                i = i + 1
+            }
+            webSocket.write(string: "transmission_end")
+            
+            
+            
+            
+            
         } catch {
             print(error)
         }
@@ -92,62 +112,87 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
         
         
         
-//        DispatchQueue.main.async {
-//            do {
-//                self.drawingEntity.data = self.drawing.dataRepresentation()
-//                self.drawingEntity.updatedAt = Date()
-//                ManagedObjectContext.update()
-//
-//
-//
-//                if self.isCommunicationThroughWebSocket {
-//
-//                    let drawingRequest = DrawingRequest(drawingData: self.drawing.dataRepresentation())
-//                    let encoder = JSONEncoder()
-//                    let jsonData = try encoder.encode(drawingRequest)
-//
-//                    let message = URLSessionWebSocketTask.Message.data(self.drawing.dataRepresentation())
-//                    self.webSocketTask.send(message) { error in
-//
-//                        if let error = error {
-//                            print("WebSocket sending error: \(error)")
-//                        }
-//                    }
-//                    self.webSocketTask.resume()
-//
-//                } else {
-//
-//                    let url = URL(string: "http://Hevi-MacBook-Pro.local:8080")!
-//                    var request = URLRequest(url: url)
-//                    request.httpMethod = "POST"
-//
-//                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//
-//                    let json = DrawingRequest(drawingData: self.drawing.dataRepresentation())
-//                    let encoder = JSONEncoder()
-//                    let jsonData = try encoder.encode(json)
-//
-//                    request.httpBody = jsonData
-//
-//    //                print(request.debugDescription)
-//
-//                    let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//                        guard let data = data, error == nil else {
-//                            print(error?.localizedDescription ?? "No data")
-//                            return
-//                        }
-//                        let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-//                        if let responseJSON = responseJSON as? [String: Any] {
-//                            print("ResponseJSON: " + responseJSON.description)
-//                        }
-//                    }
-//
-//                    task.resume()
-//                }
-//            } catch {
-//                print(error)
-//            }
-//        }
+        //        DispatchQueue.main.async {
+        //            do {
+        //                self.drawingEntity.data = self.drawing.dataRepresentation()
+        //                self.drawingEntity.updatedAt = Date()
+        //                ManagedObjectContext.update()
+        //
+        //
+        //
+        //                if self.isCommunicationThroughWebSocket {
+        //
+        //                    let drawingRequest = DrawingRequest(drawingData: self.drawing.dataRepresentation())
+        //                    let encoder = JSONEncoder()
+        //                    let jsonData = try encoder.encode(drawingRequest)
+        //
+        //                    let message = URLSessionWebSocketTask.Message.data(self.drawing.dataRepresentation())
+        //                    self.webSocketTask.send(message) { error in
+        //
+        //                        if let error = error {
+        //                            print("WebSocket sending error: \(error)")
+        //                        }
+        //                    }
+        //                    self.webSocketTask.resume()
+        //
+        //                } else {
+        //
+        //                    let url = URL(string: "http://Hevi-MacBook-Pro.local:8080")!
+        //                    var request = URLRequest(url: url)
+        //                    request.httpMethod = "POST"
+        //
+        //                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        //
+        //                    let json = DrawingRequest(drawingData: self.drawing.dataRepresentation())
+        //                    let encoder = JSONEncoder()
+        //                    let jsonData = try encoder.encode(json)
+        //
+        //                    request.httpBody = jsonData
+        //
+        //    //                print(request.debugDescription)
+        //
+        //                    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        //                        guard let data = data, error == nil else {
+        //                            print(error?.localizedDescription ?? "No data")
+        //                            return
+        //                        }
+        //                        let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+        //                        if let responseJSON = responseJSON as? [String: Any] {
+        //                            print("ResponseJSON: " + responseJSON.description)
+        //                        }
+        //                    }
+        //
+        //                    task.resume()
+        //                }
+        //            } catch {
+        //                print(error)
+        //            }
+        //        }
+    }
+    
+    
+    private func chunkData(data: Data) -> [Data] {
+        let dataLen = data.count
+        //        let chunkSize = ((1024 * 1000) * 4) // MB
+        let chunkSize = 16384
+        let fullChunks = Int(dataLen / chunkSize)
+        let totalChunks = fullChunks + (dataLen % 16384 != 0 ? 1 : 0)
+        
+        var chunks: [Data] = [Data]()
+        for chunkCounter in 0..<totalChunks {
+            var chunk:Data
+            let chunkBase = chunkCounter * chunkSize
+            var diff = chunkSize
+            if(chunkCounter == totalChunks - 1) {
+                diff = dataLen - chunkBase
+            }
+            
+            let range:Range = chunkBase..<(chunkBase + diff)
+            chunk = data.subdata(in: range)
+            chunks.append(chunk)
+            print("The size is \(chunk.count)")
+        }
+        return chunks
     }
     
     public func setup(window: UIWindow, drawingEntity: DrawingEntity) {
@@ -235,9 +280,11 @@ class CanvasViewDelegate: NSObject, PKCanvasViewDelegate {
 }
 
 struct DrawingRequest: Codable {
+    let index: Int
     let drawingData: Data
     
-    init(drawingData: Data) {
+    init(index: Int, drawingData: Data) {
+        self.index = index
         self.drawingData = drawingData
     }
 }
@@ -246,30 +293,34 @@ extension CanvasViewImpl: WebSocketDelegate {
     func didReceive(event: WebSocketEvent, client: WebSocket) {
         switch event {
         case .connected(let headers):
-//            isConnected = true
+            //            isConnected = true
             print("websocket is connected: \(headers)")
         case .disconnected(let reason, let code):
-//            isConnected = false
+            //            isConnected = false
             print("websocket is disconnected: \(reason) with code: \(code)")
         case .text(let string):
+            
+            switch string {
+            case "transmission_start":
+                self.state = .transmission
+            case "transmission_end":
+                self.state = .none
+            default:
+                self.state = .none
+            }
+            
             print("Received text: \(string)")
         case .binary(let data):
             print("Received data: \(data.count)")
-            do {
-                self.justReceivedData = true
-                
-                
-                
-                let decoder = JSONDecoder()
-                let drawingRequest = try decoder.decode(DrawingRequest.self, from: data)
-                
-                let drawing = try PKDrawing(data: drawingRequest.drawingData)
-                self.drawing = drawing
-//                let image = drawing.image(from: drawing.bounds, scale: 1.0)
-//                self.display(image)
-            } catch {
-                print(error)
-            }
+            
+            self.justReceivedData = true
+            
+            self.chunks.append(data)
+            
+            
+            //                let image = drawing.image(from: drawing.bounds, scale: 1.0)
+            //                self.display(image)
+            
             
         case .ping(_):
             break
@@ -280,14 +331,39 @@ extension CanvasViewImpl: WebSocketDelegate {
         case .reconnectSuggested(_):
             break
         case .cancelled:
-//            isConnected = false
+            //            isConnected = false
             break
         case .error(let error):
-//            isConnected = false
-//            handleError(error)
+            //            isConnected = false
+            //            handleError(error)
             break
+        }
+        
+        
+        if self.state == .none {
+            let decoder = JSONDecoder()
+            
+            var finalData = Data()
+            self.chunks.forEach { (chunk) in
+                finalData.append(chunk)
+            }
+            
+            do {
+                let drawingRequest = try decoder.decode(DrawingRequest.self, from: finalData)
+                
+                let drawing = try PKDrawing(data: drawingRequest.drawingData)
+                self.drawing = drawing
+                self.chunks = []
+            } catch {
+                print(error)
+            }
         }
         
         webSocket.write(ping: Data())
     }
+}
+
+enum TransmissionState {
+    case none
+    case transmission
 }

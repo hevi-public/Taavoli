@@ -54,7 +54,7 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
         self.zoomScale = 0.2
         
         #if !targetEnvironment(macCatalyst)
-        self.allowsFingerDrawing = false
+        self.allowsFingerDrawing = true
         #endif
         
         let request = URLRequest(url: webSocketUrl)
@@ -309,6 +309,39 @@ extension CanvasViewImpl: WebSocketDelegate {
                 self.state = .none
             }
             
+            
+            
+            if self.state == .none {
+                
+                let sorted = self.chunks.sorted { (r1, r2) -> Bool in
+                    r1.index < r2.index
+                }
+                
+                let mappedToData = sorted.map { (drawingRequest) -> Data in
+                    drawingRequest.drawingData
+                }
+                
+                var finalData = Data()
+                mappedToData.forEach { (chunk) in
+                    finalData.append(chunk)
+                }
+                
+                do {
+                    
+                    let drawing = try PKDrawing(data: finalData)
+                    self.drawing = drawing
+                    
+                } catch {
+                    print("Error converting to PKDrawing: " + error.localizedDescription)
+                }
+                self.chunks = []
+            }
+            
+            webSocket.write(ping: Data())
+            
+            
+            
+            
             print("Received text: \(string)")
         case .binary(let data):
             print("Received data: \(data.count)")
@@ -346,35 +379,7 @@ extension CanvasViewImpl: WebSocketDelegate {
         }
         
         
-        if self.state == .none {
-            
-            
-            
-            
-            let sorted = self.chunks.sorted { (r1, r2) -> Bool in
-                r1.index < r2.index
-            }
-            
-            let mappedToData = sorted.map { (drawingRequest) -> Data in
-                drawingRequest.drawingData
-            }
-            
-            var finalData = Data()
-            mappedToData.forEach { (chunk) in
-                finalData.append(chunk)
-            }
-            
-            do {
-                
-                let drawing = try PKDrawing(data: finalData)
-                self.drawing = drawing
-                self.chunks = []
-            } catch {
-                print("Error converting to PKDrawing: " + error.localizedDescription)
-            }
-        }
         
-        webSocket.write(ping: Data())
     }
 }
 

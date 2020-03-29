@@ -33,7 +33,7 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     fileprivate var justReceivedData: Bool = false
     
     private var state: TransmissionState = .none
-    private var chunks: [Data] = []
+    private var chunks: [DrawingRequest] = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -174,9 +174,9 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     private func chunkData(data: Data) -> [Data] {
         let dataLen = data.count
         //        let chunkSize = ((1024 * 1000) * 4) // MB
-        let chunkSize = 16384
+        let chunkSize = 12000
         let fullChunks = Int(dataLen / chunkSize)
-        let totalChunks = fullChunks + (dataLen % 16384 != 0 ? 1 : 0)
+        let totalChunks = fullChunks + (dataLen % 12000 != 0 ? 1 : 0)
         
         var chunks: [Data] = [Data]()
         for chunkCounter in 0..<totalChunks {
@@ -314,8 +314,14 @@ extension CanvasViewImpl: WebSocketDelegate {
             print("Received data: \(data.count)")
             
             self.justReceivedData = true
+            let decoder = JSONDecoder()
             
-            self.chunks.append(data)
+            do {
+                let drawingRequest = try decoder.decode(DrawingRequest.self, from: data)
+                self.chunks.append(drawingRequest)
+            } catch {
+                print(error)
+            }
             
             
             //                let image = drawing.image(from: drawing.bounds, scale: 1.0)
@@ -341,21 +347,30 @@ extension CanvasViewImpl: WebSocketDelegate {
         
         
         if self.state == .none {
-            let decoder = JSONDecoder()
+            
+            
+            
+            
+            let sorted = self.chunks.sorted { (r1, r2) -> Bool in
+                r1.index < r2.index
+            }
+            
+            let mappedToData = sorted.map { (drawingRequest) -> Data in
+                drawingRequest.drawingData
+            }
             
             var finalData = Data()
-            self.chunks.forEach { (chunk) in
+            mappedToData.forEach { (chunk) in
                 finalData.append(chunk)
             }
             
             do {
-                let drawingRequest = try decoder.decode(DrawingRequest.self, from: finalData)
                 
-                let drawing = try PKDrawing(data: drawingRequest.drawingData)
+                let drawing = try PKDrawing(data: finalData)
                 self.drawing = drawing
                 self.chunks = []
             } catch {
-                print(error)
+                print("Error converting to PKDrawing: " + error.localizedDescription)
             }
         }
         

@@ -30,7 +30,7 @@ class ImageUIScrollViewController: UIViewController {
     
     private var timer: Timer? = nil
     
-    let webSocketUrl = URL(string: "ws://Hevi-MacBook-Pro.local:8080/drawing")!
+    let webSocketUrl = URL(string: "ws://Hevi-MacBook-Pro.local:8080/ws/drawing")!
     var webSocket: WebSocket!
     
     override func viewDidLoad() {

@@ -15,7 +15,7 @@ import Starscream
 class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     
     let isCommunicationThroughWebSocket = true
-    let webSocketUrl = URL(string: "ws://Hevi-MacBook-Pro.local:8080/drawing")!
+    let webSocketUrl = URL(string: "ws://Hevi-MacBook-Pro.local:8080/ws/drawing")!
     var webSocket: WebSocket!
     
     private var drawingEntity: DrawingEntity!
@@ -62,17 +62,6 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
         webSocket.delegate = self
         webSocket.connect()
         
-        // TODO: cancel timer when not needed
-        //        self.updateTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
-        //
-        ////            if !self.lockUpdates {
-        ////                self.drawing = self.convertToDrawing(drawingEntity: self.drawingEntity)
-        ////            } else {
-        //            self.update()
-        ////            }
-        //        }
-        
-        
     }
     
     required init?(coder: NSCoder) {
@@ -82,92 +71,22 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     func update() {
         
         do {
-            
-            
-            
-            
             let sendChunks = chunkData(data: self.drawing.dataRepresentation())
             webSocket.write(string: "transmission_start")
         
             var i = 0
             try sendChunks.forEach { (chunk) in
-                let drawingRequest = DrawingRequest(index: i, drawingData: chunk)
+                let drawingRequest = DrawingRequest(index: i, title: "title1", data: chunk)
                 let encoder = JSONEncoder()
                 let jsonData = try encoder.encode(drawingRequest)
                 webSocket.write(data: jsonData)
                 i = i + 1
             }
             webSocket.write(string: "transmission_end")
-            
-            
-            
-            
-            
+  
         } catch {
             print(error)
         }
-        
-        
-        
-        
-        
-        
-        //        DispatchQueue.main.async {
-        //            do {
-        //                self.drawingEntity.data = self.drawing.dataRepresentation()
-        //                self.drawingEntity.updatedAt = Date()
-        //                ManagedObjectContext.update()
-        //
-        //
-        //
-        //                if self.isCommunicationThroughWebSocket {
-        //
-        //                    let drawingRequest = DrawingRequest(drawingData: self.drawing.dataRepresentation())
-        //                    let encoder = JSONEncoder()
-        //                    let jsonData = try encoder.encode(drawingRequest)
-        //
-        //                    let message = URLSessionWebSocketTask.Message.data(self.drawing.dataRepresentation())
-        //                    self.webSocketTask.send(message) { error in
-        //
-        //                        if let error = error {
-        //                            print("WebSocket sending error: \(error)")
-        //                        }
-        //                    }
-        //                    self.webSocketTask.resume()
-        //
-        //                } else {
-        //
-        //                    let url = URL(string: "http://Hevi-MacBook-Pro.local:8080")!
-        //                    var request = URLRequest(url: url)
-        //                    request.httpMethod = "POST"
-        //
-        //                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        //
-        //                    let json = DrawingRequest(drawingData: self.drawing.dataRepresentation())
-        //                    let encoder = JSONEncoder()
-        //                    let jsonData = try encoder.encode(json)
-        //
-        //                    request.httpBody = jsonData
-        //
-        //    //                print(request.debugDescription)
-        //
-        //                    let task = URLSession.shared.dataTask(with: request) { data, response, error in
-        //                        guard let data = data, error == nil else {
-        //                            print(error?.localizedDescription ?? "No data")
-        //                            return
-        //                        }
-        //                        let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-        //                        if let responseJSON = responseJSON as? [String: Any] {
-        //                            print("ResponseJSON: " + responseJSON.description)
-        //                        }
-        //                    }
-        //
-        //                    task.resume()
-        //                }
-        //            } catch {
-        //                print(error)
-        //            }
-        //        }
     }
     
     
@@ -281,11 +200,13 @@ class CanvasViewDelegate: NSObject, PKCanvasViewDelegate {
 
 struct DrawingRequest: Codable {
     let index: Int
-    let drawingData: Data
+    let title: String
+    let data: Data
     
-    init(index: Int, drawingData: Data) {
+    init(index: Int = 0, title: String, data: Data) {
         self.index = index
-        self.drawingData = drawingData
+        self.data = data
+        self.title = title
     }
 }
 
@@ -318,7 +239,7 @@ extension CanvasViewImpl: WebSocketDelegate {
                 }
                 
                 let mappedToData = sorted.map { (drawingRequest) -> Data in
-                    drawingRequest.drawingData
+                    drawingRequest.data
                 }
                 
                 var finalData = Data()

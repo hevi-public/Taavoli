@@ -8,15 +8,7 @@
 import Foundation
 
 public class DrawingModel {
-    var _objectId: String?
-    var objectId: String {
-        get {
-            _objectId ?? UUID().uuidString
-        }
-        set {
-            _objectId = newValue
-        }
-    }
+    var objectId: String?
     let index: Int
     let title: String
     let data: Data
@@ -25,7 +17,7 @@ public class DrawingModel {
         self.index = index
         self.data = data
         self.title = title
-        self._objectId = objectId
+        self.objectId = objectId
     }
 }
 

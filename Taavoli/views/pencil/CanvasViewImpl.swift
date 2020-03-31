@@ -70,23 +70,25 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     
     func update() {
         
-        do {
-            let sendChunks = chunkData(data: self.drawing.dataRepresentation())
-            webSocket.write(string: "transmission_start")
+        DrawingHttpStore().update(id: drawingModel.objectId, title: drawingModel.title, data: drawingModel.data)
         
-            var i = 0
-            try sendChunks.forEach { (chunk) in
-                let drawingRequest = DrawingRequest(index: i, title: "title1", data: chunk)
-                let encoder = JSONEncoder()
-                let jsonData = try encoder.encode(drawingRequest)
-                webSocket.write(data: jsonData)
-                i = i + 1
-            }
-            webSocket.write(string: "transmission_end")
-  
-        } catch {
-            print(error)
-        }
+//        do {
+//            let sendChunks = chunkData(data: self.drawing.dataRepresentation())
+//            webSocket.write(string: "transmission_start")
+//
+//            var i = 0
+//            try sendChunks.forEach { (chunk) in
+//                let drawingRequest = DrawingRequest(index: i, title: "title1", data: chunk)
+//                let encoder = JSONEncoder()
+//                let jsonData = try encoder.encode(drawingRequest)
+//                webSocket.write(data: jsonData)
+//                i = i + 1
+//            }
+//            webSocket.write(string: "transmission_end")
+//
+//        } catch {
+//            print(error)
+//        }
     }
     
     

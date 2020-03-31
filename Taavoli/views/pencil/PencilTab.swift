@@ -19,6 +19,17 @@ struct PencilTab: View {
             List(environment.drawings) { drawingEntity in
                 NavigationLink(destination: PencilCanvas(drawingModel: drawingEntity)) {
                     Text(drawingEntity.title)
+                        .contextMenu {
+                            Button(action: {
+                                if let id = drawingEntity.objectId {
+                                    DrawingHttpStore().delete(id: id)
+                                }
+                            }) {
+                                Text("Delete")
+                                Image(systemName: "xmark.circle")
+                            }
+
+                        }
                 }
             }.navigationBarItems(trailing:
                 Text("Add").onTapGesture {

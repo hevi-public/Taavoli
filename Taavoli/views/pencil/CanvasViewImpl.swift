@@ -215,14 +215,14 @@ extension CanvasViewImpl: WebSocketDelegate {
             case "transmission_start":
                 self.state = .transmission
             case "transmission_end":
-                self.state = .none
+                self.state = .transmissionEnded
             default:
                 self.state = .none
             }
             
             
             
-            if self.state == .none {
+            if self.state == .transmissionEnded {
                 
                 let sorted = self.chunks.sorted { (r1, r2) -> Bool in
                     r1.index < r2.index
@@ -246,6 +246,7 @@ extension CanvasViewImpl: WebSocketDelegate {
                     print("Error converting to PKDrawing: " + error.localizedDescription)
                 }
                 self.chunks = []
+                self.state = .none
             }
             
             webSocket.write(ping: Data())
@@ -297,4 +298,5 @@ extension CanvasViewImpl: WebSocketDelegate {
 enum TransmissionState {
     case none
     case transmission
+    case transmissionEnded
 }

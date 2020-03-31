@@ -78,4 +78,31 @@ public class DrawingHttpStore {
         
         task.resume()
     }
+    
+    
+    public func delete(id: String) {
+        do {
+            var url = URL(string: endPoint)!
+            url.appendPathComponent(id)
+            var request = URLRequest(url: url)
+            request.httpMethod = "DELETE"
+            
+            
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    print(error?.localizedDescription ?? "No data")
+                    return
+                }
+                let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+                if let responseJSON = responseJSON as? [String: Any] {
+                    print("ResponseJSON: " + responseJSON.description)
+                }
+            }
+            
+            task.resume()
+        } catch {
+            print(error)
+        }
+    }
 }

@@ -33,6 +33,7 @@
 		D7D05A822427780D0088C1AB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7D05A812427780D0088C1AB /* CloudKit.framework */; };
 		D7F53D2C2433ADC400B45769 /* DrawingHttpStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F53D2B2433ADC400B45769 /* DrawingHttpStore.swift */; };
 		D7F53D2E2433B18200B45769 /* DrawingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F53D2D2433B18200B45769 /* DrawingRequest.swift */; };
+		D7F53D332433B2D000B45769 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F53D322433B2D000B45769 /* CoreDataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		D7D05A812427780D0088C1AB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		D7F53D2B2433ADC400B45769 /* DrawingHttpStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingHttpStore.swift; sourceTree = "<group>"; };
 		D7F53D2D2433B18200B45769 /* DrawingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingRequest.swift; sourceTree = "<group>"; };
+		D7F53D322433B2D000B45769 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,7 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				D7A5AE222422ADBB006E2B27 /* Environment.swift */,
-				D7A5AE3D24241AE8006E2B27 /* ManagedObjectContext.swift */,
 				D7A5AE3F24241B92006E2B27 /* NSManagedObjectExtension.swift */,
 				D7A5AE4F2425520B006E2B27 /* MyObservableObject.swift */,
 			);
@@ -268,6 +269,8 @@
 		D7F53D312433B1F400B45769 /* coredata */ = {
 			isa = PBXGroup;
 			children = (
+				D7A5AE3D24241AE8006E2B27 /* ManagedObjectContext.swift */,
+				D7F53D322433B2D000B45769 /* CoreDataStore.swift */,
 			);
 			path = coredata;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				D7A5AE272422C0B3006E2B27 /* CaptureImageView.swift in Sources */,
 				D7A5AE1F2422AC55006E2B27 /* CanvasViewContainerView.swift in Sources */,
 				D7A5AE4D24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift in Sources */,
+				D7F53D332433B2D000B45769 /* CoreDataStore.swift in Sources */,
 				D7A5ADE92422A613006E2B27 /* ContentView.swift in Sources */,
 				D7A5AE4A2424417F006E2B27 /* ImageUIScrollViewController.swift in Sources */,
 				D7A5ADE72422A613006E2B27 /* Taavoli.xcdatamodeld in Sources */,

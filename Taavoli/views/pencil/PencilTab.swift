@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreData
 import PencilKit
 
 
@@ -29,15 +28,8 @@ struct PencilTab: View {
                     do {
                         DrawingHttpStore().update(title: "tttitle", data: PKDrawing().dataRepresentation())
                         
-                        //                        guard let entity =  NSEntityDescription.entity(forEntityName: "DrawingEntity", in: self.managedObjectContext) else { return }
-                        //                        let drawingEntity = DrawingEntity(entity: entity, insertInto: self.managedObjectContext)
-                        //
-                        //                        drawingEntity.createdAt = Date()
-                        //                        drawingEntity.updatedAt = drawingEntity.createdAt
-                        //
-                        //                        self.managedObjectContext.insert(drawingEntity)
-                        //
-                        //                        try self.managedObjectContext.save()
+                        CoreDataStore().update()
+                                                
                     } catch {
                         print("Problem with saving a new DrawingEntity")
                     }

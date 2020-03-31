@@ -9,11 +9,11 @@ import Foundation
 
 public class DrawingHttpStore {
     
-    let postEndPoint = "http://Hevi-MacBook-Pro.local:8080/drawing"
+    let endPoint = "http://Hevi-MacBook-Pro.local:8080/drawing"
     
     func update(title: String, data: Data) {
         do {
-            let url = URL(string: postEndPoint)!
+            let url = URL(string: endPoint)!
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             
@@ -43,10 +43,10 @@ public class DrawingHttpStore {
     }
     
     public func getAll(completion: @escaping ([DrawingRequest]) -> () = {_ in }) {
-        //        self.drawings = ManagedObjectContext.getAllEntity(predicate: nil, sortDescriptors: [NSSortDescriptor(key: "updatedAt", ascending: false)])
         
-        let url = URL(string: "http://Hevi-MacBook-Pro.local:8080/drawing")!
-        var request = URLRequest(url: url)
+        
+        let url = URL(string: endPoint)!
+        let request = URLRequest(url: url)
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {

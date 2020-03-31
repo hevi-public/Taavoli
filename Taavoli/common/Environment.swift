@@ -19,7 +19,7 @@ class AppEnvironment: ObservableObject {
     }
     
     public func update(completion: @escaping ([DrawingRequest]) -> () = {_ in }) {
-        //        self.drawings = ManagedObjectContext.getAllEntity(predicate: nil, sortDescriptors: [NSSortDescriptor(key: "updatedAt", ascending: false)])
+//        self.drawings = CoreDataStore().getAll()
         
         DrawingHttpStore().getAll { (drawingRequests) in
             self.drawings = drawingRequests

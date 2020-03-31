@@ -31,6 +31,8 @@
 		D7A5AE4D24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE4C24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift */; };
 		D7A5AE502425520B006E2B27 /* MyObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A5AE4F2425520B006E2B27 /* MyObservableObject.swift */; };
 		D7D05A822427780D0088C1AB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7D05A812427780D0088C1AB /* CloudKit.framework */; };
+		D7F53D2C2433ADC400B45769 /* DrawingHttpStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F53D2B2433ADC400B45769 /* DrawingHttpStore.swift */; };
+		D7F53D2E2433B18200B45769 /* DrawingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F53D2D2433B18200B45769 /* DrawingRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,8 @@
 		D7A5AE4F2425520B006E2B27 /* MyObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyObservableObject.swift; sourceTree = "<group>"; };
 		D7D05A7F242778080088C1AB /* Taavoli.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Taavoli.entitlements; sourceTree = "<group>"; };
 		D7D05A812427780D0088C1AB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		D7F53D2B2433ADC400B45769 /* DrawingHttpStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingHttpStore.swift; sourceTree = "<group>"; };
+		D7F53D2D2433B18200B45769 /* DrawingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +138,7 @@
 		D7A5ADE02422A613006E2B27 /* Taavoli */ = {
 			isa = PBXGroup;
 			children = (
+				D7F53D2F2433B1E200B45769 /* stores */,
 				D7D05A7F242778080088C1AB /* Taavoli.entitlements */,
 				D7A5AE212422ADAB006E2B27 /* common */,
 				D7A5AE142422A955006E2B27 /* views */,
@@ -240,6 +245,31 @@
 				D7D05A812427780D0088C1AB /* CloudKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D7F53D2F2433B1E200B45769 /* stores */ = {
+			isa = PBXGroup;
+			children = (
+				D7F53D312433B1F400B45769 /* coredata */,
+				D7F53D302433B1EE00B45769 /* http */,
+			);
+			path = stores;
+			sourceTree = "<group>";
+		};
+		D7F53D302433B1EE00B45769 /* http */ = {
+			isa = PBXGroup;
+			children = (
+				D7F53D2B2433ADC400B45769 /* DrawingHttpStore.swift */,
+				D7F53D2D2433B18200B45769 /* DrawingRequest.swift */,
+			);
+			path = http;
+			sourceTree = "<group>";
+		};
+		D7F53D312433B1F400B45769 /* coredata */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = coredata;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,6 +413,8 @@
 				D7A5AE232422ADBB006E2B27 /* Environment.swift in Sources */,
 				D7A5AE4B2424417F006E2B27 /* ImageUIScrollView.swift in Sources */,
 				D7A5ADE22422A613006E2B27 /* AppDelegate.swift in Sources */,
+				D7F53D2C2433ADC400B45769 /* DrawingHttpStore.swift in Sources */,
+				D7F53D2E2433B18200B45769 /* DrawingRequest.swift in Sources */,
 				D7A5AE492424417F006E2B27 /* ImageView.swift in Sources */,
 				D7A5AE1E2422AC55006E2B27 /* CanvasViewImpl.swift in Sources */,
 				D7A5ADE42422A613006E2B27 /* SceneDelegate.swift in Sources */,

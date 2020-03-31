@@ -18,7 +18,7 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     let webSocketUrl = URL(string: "ws://Hevi-MacBook-Pro.local:8080/ws/drawing")!
     var webSocket: WebSocket!
     
-    private var drawingEntity: DrawingEntity!
+    private var drawingEntity: DrawingRequest!
     
     private var updateTimer: Timer! = nil
     private var lockUpdatingCanvasTimer: Timer?
@@ -114,7 +114,7 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
         return chunks
     }
     
-    public func setup(window: UIWindow, drawingEntity: DrawingEntity) {
+    public func setup(window: UIWindow, drawingEntity: DrawingRequest) {
         self.drawingEntity = drawingEntity
         
         self.drawing = self.convertToDrawing(drawingEntity: drawingEntity)
@@ -145,21 +145,20 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     }
     
     
-    public static func getEntity(context: NSManagedObjectContext) -> DrawingEntity? {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Drawing")
-        do {
-            return try context.fetch(fetchRequest).first as? DrawingEntity
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        return nil
-    }
+//    public static func getEntity(context: NSManagedObjectContext) -> DrawingEntity? {
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Drawing")
+//        do {
+//            return try context.fetch(fetchRequest).first as? DrawingEntity
+//        } catch let error {
+//            print(error.localizedDescription)
+//        }
+//        return nil
+//    }
     
-    private func convertToDrawing(drawingEntity: DrawingEntity) -> PKDrawing {
+    private func convertToDrawing(drawingEntity: DrawingRequest) -> PKDrawing {
         do {
-            if let data = drawingEntity.data {
-                return try PKDrawing(data: data)
-            }
+            let data = drawingEntity.data
+            return try PKDrawing(data: data)
         } catch {
             print("Error converting data to Drawing")
         }
@@ -198,15 +197,25 @@ class CanvasViewDelegate: NSObject, PKCanvasViewDelegate {
     
 }
 
-struct DrawingRequest: Codable {
+class DrawingRequest: Codable {
+    var _objectId: String?
+    var objectId: String {
+        get {
+            _objectId ?? UUID().uuidString
+        }
+        set {
+            _objectId = newValue
+        }
+    }
     let index: Int
     let title: String
     let data: Data
     
-    init(index: Int = 0, title: String, data: Data) {
+    init(objectId: String? = nil, index: Int = 0, title: String, data: Data) {
         self.index = index
         self.data = data
         self.title = title
+        self._objectId = objectId
     }
 }
 

@@ -22,10 +22,8 @@ struct PencilTab: View {
         NavigationView {
             List(environment.drawings) { drawingEntity in
                 NavigationLink(destination: PencilCanvas(drawingEntity: drawingEntity)) {
-                    Text(drawingEntity.updatedAt?.description ?? "")
+                    Text(drawingEntity.title ?? "")
                 }
-                
-                
             }.navigationBarItems(trailing:
                 Text("Add").onTapGesture {
                     do {
@@ -79,8 +77,8 @@ struct PencilTab: View {
     }
 }
 
-extension DrawingEntity: Identifiable {
+extension DrawingRequest: Identifiable {
     public var id: ObjectIdentifier {
-        ObjectIdentifier(self.objectID)
+        ObjectIdentifier(self)
     }
 }

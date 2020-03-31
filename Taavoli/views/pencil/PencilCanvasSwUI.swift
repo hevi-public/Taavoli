@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PencilCanvas: View {
     
-    var drawingEntity: DrawingEntity
+    var drawingEntity: DrawingRequest
     
     var body: some View {
         PKCanvasUIKit(drawingEntity: drawingEntity)
@@ -19,7 +19,7 @@ struct PencilCanvas: View {
 
 struct PKCanvasUIKit : UIViewRepresentable {
     
-    var drawingEntity: DrawingEntity
+    var drawingEntity: DrawingRequest
     
     @EnvironmentObject var environment: AppEnvironment
     

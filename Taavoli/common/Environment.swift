@@ -12,7 +12,7 @@ import UIKit
 class AppEnvironment: ObservableObject {
     var window: UIWindow?
     
-    @Published var drawings: [DrawingEntity] = []
+    @Published var drawings: [DrawingRequest] = []
     
     init() {
         self.update()
@@ -30,7 +30,21 @@ class AppEnvironment: ObservableObject {
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            if let responseJSON = responseJSON as? [String: Any] {
+            if let responseJSON = responseJSON as? [[String: Any]] {
+                
+                var converted: [DrawingRequest] = []
+                responseJSON.forEach { response in
+                    guard let id = response["id"] as? String else { return }
+                    guard let title = response["title"] as? String else { return }
+                    guard let dataString = response["data"] as? String else { return }
+                    guard let data = Data(base64Encoded: dataString) else { return }
+                    
+                    let drawing = DrawingRequest(objectId: id, title: title, data: data)
+                    converted.append(drawing)
+                }
+                
+                self.drawings = converted
+                
                 print("ResponseJSON: " + responseJSON.description)
             }
         }

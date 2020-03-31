@@ -77,8 +77,4 @@ struct PencilTab: View {
     }
 }
 
-extension DrawingRequest: Identifiable {
-    public var id: ObjectIdentifier {
-        ObjectIdentifier(self)
-    }
-}
+

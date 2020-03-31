@@ -219,6 +219,13 @@ class DrawingRequest: Codable {
     }
 }
 
+
+extension DrawingRequest: Identifiable {
+    public var id: ObjectIdentifier {
+        ObjectIdentifier(self)
+    }
+}
+
 extension CanvasViewImpl: WebSocketDelegate {
     func didReceive(event: WebSocketEvent, client: WebSocket) {
         switch event {

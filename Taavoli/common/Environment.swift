@@ -43,7 +43,10 @@ class AppEnvironment: ObservableObject {
                     converted.append(drawing)
                 }
                 
-                self.drawings = converted
+                DispatchQueue.main.async {
+                    self.drawings = converted
+                }
+                
                 
                 print("ResponseJSON: " + responseJSON.description)
             }

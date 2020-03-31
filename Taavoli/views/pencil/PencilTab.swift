@@ -20,7 +20,7 @@ struct PencilTab: View {
     var body: some View {
         NavigationView {
             List(environment.drawings) { drawingEntity in
-                NavigationLink(destination: PencilCanvas(drawingEntity: drawingEntity)) {
+                NavigationLink(destination: PencilCanvas(drawingModel: drawingEntity)) {
                     Text(drawingEntity.title ?? "")
                 }
             }.navigationBarItems(trailing:

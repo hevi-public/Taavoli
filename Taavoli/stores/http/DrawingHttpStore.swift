@@ -63,7 +63,7 @@ public class DrawingHttpStore {
                     guard let dataString = response["data"] as? String else { return }
                     guard let data = Data(base64Encoded: dataString) else { return }
                     
-                    let drawing = DrawingRequest(objectId: id, title: title, data: data)
+                    let drawing = DrawingRequest(id: id, title: title, data: data)
                     converted.append(drawing)
                 }
                 

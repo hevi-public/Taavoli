@@ -34,6 +34,7 @@
 		D7F53D2C2433ADC400B45769 /* DrawingHttpStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F53D2B2433ADC400B45769 /* DrawingHttpStore.swift */; };
 		D7F53D2E2433B18200B45769 /* DrawingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F53D2D2433B18200B45769 /* DrawingRequest.swift */; };
 		D7F53D332433B2D000B45769 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F53D322433B2D000B45769 /* CoreDataStore.swift */; };
+		D7F53D352433DA4200B45769 /* DrawingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F53D342433DA4200B45769 /* DrawingModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		D7F53D2B2433ADC400B45769 /* DrawingHttpStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingHttpStore.swift; sourceTree = "<group>"; };
 		D7F53D2D2433B18200B45769 /* DrawingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingRequest.swift; sourceTree = "<group>"; };
 		D7F53D322433B2D000B45769 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		D7F53D342433DA4200B45769 /* DrawingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +190,7 @@
 				D7A5AE2B2422C647006E2B27 /* photo */,
 				D7A5AE152422A960006E2B27 /* pencil */,
 				D7A5ADE82422A613006E2B27 /* ContentView.swift */,
+				D7F53D342433DA4200B45769 /* DrawingModel.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				D7A5AE1E2422AC55006E2B27 /* CanvasViewImpl.swift in Sources */,
 				D7A5ADE42422A613006E2B27 /* SceneDelegate.swift in Sources */,
 				D7A5AE4024241B92006E2B27 /* NSManagedObjectExtension.swift in Sources */,
+				D7F53D352433DA4200B45769 /* DrawingModel.swift in Sources */,
 				D7A5AE272422C0B3006E2B27 /* CaptureImageView.swift in Sources */,
 				D7A5AE1F2422AC55006E2B27 /* CanvasViewContainerView.swift in Sources */,
 				D7A5AE4D24254A69006E2B27 /* ImageUIScrollViewControllerRepresentable.swift in Sources */,

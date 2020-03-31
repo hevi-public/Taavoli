@@ -12,7 +12,7 @@ import UIKit
 class AppEnvironment: ObservableObject {
     var window: UIWindow?
     
-    @Published var drawings: [DrawingRequest] = []
+    @Published var drawings: [DrawingModel] = []
     
     init() {
         self.update()
@@ -22,7 +22,9 @@ class AppEnvironment: ObservableObject {
 //        self.drawings = CoreDataStore().getAll()
         
         DrawingHttpStore().getAll { (drawingRequests) in
-            self.drawings = drawingRequests
+            self.drawings = drawingRequests.map { drawingRequest -> DrawingModel in
+                return DrawingModel(objectId: drawingRequest.id, index: drawingRequest.index, title: drawingRequest.title, data: drawingRequest.data)
+            }
         }
         
     }

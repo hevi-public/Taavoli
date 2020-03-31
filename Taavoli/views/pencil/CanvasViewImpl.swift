@@ -18,7 +18,7 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     let webSocketUrl = URL(string: "ws://Hevi-MacBook-Pro.local:8080/ws/drawing")!
     var webSocket: WebSocket!
     
-    private var drawingEntity: DrawingRequest!
+    private var drawingModel: DrawingModel!
     
     private var updateTimer: Timer! = nil
     private var lockUpdatingCanvasTimer: Timer?
@@ -114,10 +114,10 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
         return chunks
     }
     
-    public func setup(window: UIWindow, drawingEntity: DrawingRequest) {
-        self.drawingEntity = drawingEntity
+    public func setup(window: UIWindow, drawingModel: DrawingModel) {
+        self.drawingModel = drawingModel
         
-        self.drawing = self.convertToDrawing(drawingEntity: drawingEntity)
+        self.drawing = self.convertToDrawing(drawingModel: drawingModel)
         
         #if !targetEnvironment(macCatalyst)
         guard let toolPicker = PKToolPicker.shared(for: window) else { return }
@@ -155,9 +155,9 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
 //        return nil
 //    }
     
-    private func convertToDrawing(drawingEntity: DrawingRequest) -> PKDrawing {
+    private func convertToDrawing(drawingModel: DrawingModel) -> PKDrawing {
         do {
-            let data = drawingEntity.data
+            let data = drawingModel.data
             return try PKDrawing(data: data)
         } catch {
             print("Error converting data to Drawing")

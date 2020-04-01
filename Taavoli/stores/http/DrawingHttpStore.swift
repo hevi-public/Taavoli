@@ -15,8 +15,9 @@ public class DrawingHttpStore {
         do {
             let url = URL(string: endPoint)!
             var request = URLRequest(url: url)
-            request.httpMethod = "POST"
             
+            request.httpMethod = (id == nil) ? "POST" : "PUT"
+        
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
             let json = DrawingRequest(id: id, title: title, data: data)

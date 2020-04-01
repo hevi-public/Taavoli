@@ -28,8 +28,12 @@ struct PencilTab: View {
                                 Text("Delete")
                                 Image(systemName: "xmark.circle")
                             }
-
-                        }
+                            .onTapGesture {
+                                self.environment.update()
+                            }
+                            
+                    }
+                    
                 }
             }.navigationBarItems(trailing:
                 Text("Add").onTapGesture {

@@ -119,7 +119,7 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     public func setup(window: UIWindow, drawingModel: DrawingModel) {
         self.drawingModel = drawingModel
         
-        self.drawing = self.convertToDrawing(drawingModel: drawingModel)
+//        self.drawing = self.convertToDrawing(drawingModel: drawingModel)
         
         #if !targetEnvironment(macCatalyst)
         guard let toolPicker = PKToolPicker.shared(for: window) else { return }
@@ -131,6 +131,18 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     }
     
     override public func becomeFirstResponder() -> Bool {
+        
+        if let objectId = drawingModel.objectId {
+            DrawingHttpStore().get(id: objectId, completion: { drawingRequest in
+                do {
+                    self.drawing = try PKDrawing(data: drawingRequest.data)
+                } catch {
+                    print(error)
+                }
+            })
+        }
+        
+        
         
         //        if self.drawingEntity == nil {
         //            let drawingEntity = NodeRepository.save(drawing: self.drawing.dataRepresentation())

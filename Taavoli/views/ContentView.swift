@@ -17,6 +17,9 @@ struct ContentView: View {
     @State var shouldDisplayCaptureImageView: Bool = false
     @State var shouldDisplayAlbumView: Bool = false
     
+    @State var showTextInput = false
+    @State var textInputText: String
+    
     var isCameraActive: Bool {
         get {
             isCameraShown && !isAlbumShown && shouldDisplayCaptureImageView
@@ -32,7 +35,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            PencilTab().tabItem {
+            PencilTab(showTextInput: showTextInput, textInputText: $textInputText).tabItem {
                 Image(systemName: "list.dash")
                 Text("Menu")
             }
@@ -47,6 +50,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(isCameraShown: false, isAlbumShown: false, image: nil, shouldDisplayCaptureImageView: false)
+        ContentView(isCameraShown: false, isAlbumShown: false, image: nil, shouldDisplayCaptureImageView: false, textInputText: "")
     }
 }

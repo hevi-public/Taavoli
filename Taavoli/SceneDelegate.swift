@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
             window?.rootViewController = UIHostingController(rootView:
-                ContentView(isCameraShown: false, isAlbumShown: false, image: nil, shouldDisplayCaptureImageView: false)
+                ContentView(isCameraShown: false, isAlbumShown: false, image: nil, shouldDisplayCaptureImageView: false, textInputText: "")
                     .environmentObject(environmentObject)
                     .environment(\.managedObjectContext, context))
             self.window!.makeKeyAndVisible()

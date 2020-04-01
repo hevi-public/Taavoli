@@ -19,12 +19,14 @@ struct PencilTab: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+//            VStack {
                 if self.showTextInput {
                     TextField("", text: $textInputText)
                         .padding()
                         .background(Color(.lightGray))
                         .cornerRadius(10)
+                        .animation(Animation.default)
+                        .transition(.move(edge: .leading))
                 }
                 List(environment.drawings) { drawingEntity in
                     NavigationLink(destination: PencilCanvas(drawingModel: drawingEntity)) {
@@ -45,15 +47,30 @@ struct PencilTab: View {
                         }
                         
                     }
-                }.navigationBarItems(trailing:
-                    Text("Add").onTapGesture {
-                        self.showTextInput.toggle()
-                        //                        DrawingHttpStore().update(title: "tttitle", data: PKDrawing().dataRepresentation())
+                    }.disabled(showTextInput)
+                    .blur(radius: showTextInput ? 3 : 0)
+                    .animation(Animation.default)
+                    .transition(.slide)
+                .navigationBarItems(trailing:
+                    Button(action: {
+                        if self.showTextInput && !self.textInputText.isEmpty {
+                            DrawingHttpStore().update(title: self.textInputText, data: PKDrawing().dataRepresentation())
+                        }
+                        withAnimation {
+                            self.showTextInput.toggle()
+                        }
+                        
+                    }, label: {
+                        Text("Add")
+                    })
+                    
                         
                         
-                    }
+                        
+                        
+                    
                 ).navigationBarTitle(Text("Pencil notes"), displayMode: .large)
             }.navigationViewStyle(StackNavigationViewStyle())
-        }
+//            }
     }
 }

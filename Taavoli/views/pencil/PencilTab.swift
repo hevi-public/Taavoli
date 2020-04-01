@@ -19,7 +19,7 @@ struct PencilTab: View {
     
     var body: some View {
         NavigationView {
-//            VStack {
+            VStack {
                 if self.showTextInput {
                     TextField("", text: $textInputText)
                         .padding()
@@ -47,30 +47,44 @@ struct PencilTab: View {
                         }
                         
                     }
-                    }.disabled(showTextInput)
+                }.disabled(showTextInput)
                     .blur(radius: showTextInput ? 3 : 0)
                     .animation(Animation.default)
                     .transition(.slide)
-                .navigationBarItems(trailing:
-                    Button(action: {
-                        if self.showTextInput && !self.textInputText.isEmpty {
-                            DrawingHttpStore().update(title: self.textInputText, data: PKDrawing().dataRepresentation())
-                        }
-                        withAnimation {
-                            self.showTextInput.toggle()
-                        }
+                    .navigationBarItems(leading:
+                        Button(action: {
+                            withAnimation {
+                                self.showTextInput.toggle()
+                            }
+                        }, label: {
+                            if self.showTextInput {
+                                Text("Cancel")
+                            }
+                        })
+                        , trailing:
+                        Button(action: {
+                            if self.showTextInput && !self.textInputText.isEmpty {
+                                DrawingHttpStore().update(title: self.textInputText, data: PKDrawing().dataRepresentation())
+                            }
+                            withAnimation {
+                                self.showTextInput.toggle()
+                            }
+                            
+                        }, label: {
+                            if self.showTextInput && !self.textInputText.isEmpty {
+                                Text("Save")
+                            } else if !self.showTextInput {
+                                Text("Add")
+                            }
+                        })
                         
-                    }, label: {
-                        Text("Add")
-                    })
-                    
                         
                         
                         
                         
-                    
+                        
                 ).navigationBarTitle(Text("Pencil notes"), displayMode: .large)
             }.navigationViewStyle(StackNavigationViewStyle())
-//            }
+        }
     }
 }

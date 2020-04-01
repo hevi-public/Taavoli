@@ -70,7 +70,7 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     
     func update() {
         
-        DrawingHttpStore().update(id: drawingModel.objectId, title: drawingModel.title, data: drawing.dataRepresentation())
+        DrawingHttpStore().update(id: drawingModel.objectId, title: drawingModel.title, data: drawing.dataRepresentation(), completion: {})
         
 //        do {
 //            let sendChunks = chunkData(data: self.drawing.dataRepresentation())

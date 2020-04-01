@@ -64,7 +64,11 @@ struct PencilTab: View {
                         , trailing:
                         Button(action: {
                             if self.showTextInput && !self.textInputText.isEmpty {
-                                DrawingHttpStore().update(title: self.textInputText, data: PKDrawing().dataRepresentation())
+                                DrawingHttpStore().update(title: self.textInputText,
+                                                          data: PKDrawing().dataRepresentation(),
+                                                          completion: {
+                                                            self.environment.update()
+                                })
                             }
                             withAnimation {
                                 self.showTextInput.toggle()

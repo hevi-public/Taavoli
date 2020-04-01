@@ -11,7 +11,7 @@ public class DrawingHttpStore {
     
     let endPoint = "http://Hevi-MacBook-Pro.local:8080/drawing"
     
-    func update(id: String? = nil, title: String, data: Data) {
+    func update(id: String? = nil, title: String, data: Data, completion: @escaping () -> ()) {
         do {
             let url = URL(string: endPoint)!
             var request = URLRequest(url: url)
@@ -35,6 +35,8 @@ public class DrawingHttpStore {
                 if let responseJSON = responseJSON as? [String: Any] {
                     print("ResponseJSON: " + responseJSON.description)
                 }
+                
+                completion()
             }
             
             task.resume()

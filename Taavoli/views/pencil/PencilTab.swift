@@ -54,6 +54,9 @@ struct PencilTab: View {
                     .navigationBarItems(leading:
                         Button(action: {
                             withAnimation {
+                                if self.showTextInput {
+                                    self.textInputText = ""
+                                }
                                 self.showTextInput.toggle()
                             }
                         }, label: {
@@ -69,6 +72,9 @@ struct PencilTab: View {
                                                           completion: {
                                                             self.environment.update()
                                 })
+                                if self.showTextInput {
+                                    self.textInputText = ""
+                                }
                             }
                             withAnimation {
                                 self.showTextInput.toggle()

@@ -10,14 +10,49 @@ import SwiftUI
 
 struct PencilCanvas: View {
     
+    @State var allowFingerDrawing: Bool = false
+    
     var drawingModel: DrawingModel
     
     var body: some View {
-        PKCanvasUIKit(drawingModel: drawingModel)
+        ZStack {
+            PKCanvasUIKit(allowsFingerDrawing: $allowFingerDrawing, drawingModel: drawingModel)
+            
+            VStack {
+                Spacer()
+
+                HStack {
+                    Spacer()
+
+                    Button(action: {
+                        self.allowFingerDrawing.toggle()
+                    }, label: {
+                        if self.allowFingerDrawing {
+                            Image(systemName: "hand.draw")
+                                .frame(width: 70, height: 70)
+                                .foregroundColor(Color.white)
+                                .font(.system(size: 24, weight: .medium))
+                        } else {
+                            Image(systemName: "pencil.and.outline")
+                                .frame(width: 70, height: 70)
+                                .foregroundColor(Color.white)
+                                .font(.system(size: 24, weight: .medium))
+                        }
+                    })
+                        .background(Color.blue)
+                        .opacity(0.65)
+                        .cornerRadius(40)
+                        .padding()
+
+                }
+            }
+        }
     }
 }
 
 struct PKCanvasUIKit : UIViewRepresentable {
+    
+    @Binding var allowsFingerDrawing: Bool
     
     var drawingModel: DrawingModel
     
@@ -33,6 +68,6 @@ struct PKCanvasUIKit : UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: CanvasViewImpl, context: Context) {
-        
+        uiView.allowsFingerDrawing = self.allowsFingerDrawing
     }
 }

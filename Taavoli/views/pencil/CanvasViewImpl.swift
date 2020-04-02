@@ -53,10 +53,6 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
         self.minimumZoomScale = 0.005
         self.zoomScale = 0.2
         
-        #if !targetEnvironment(macCatalyst)
-        self.allowsFingerDrawing = true
-        #endif
-        
         let request = URLRequest(url: webSocketUrl)
         webSocket = WebSocket(request: request)
         webSocket.delegate = self

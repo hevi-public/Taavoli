@@ -15,6 +15,7 @@ struct PencilTab: View {
     @EnvironmentObject var environment: AppEnvironment
     
     @State var showTextInput = false
+    @State var editedDrawing: DrawingModel?
     @Binding var textInputText: String
     
     var body: some View {
@@ -33,6 +34,17 @@ struct PencilTab: View {
                         Text(drawingEntity.title)
                             .contextMenu {
                                 Button(action: {
+                                    if let _ = drawingEntity.objectId {
+                                        self.showTextInput.toggle()
+                                        self.textInputText = drawingEntity.title
+                                        self.editedDrawing = drawingEntity
+                                    }
+                                }) {
+                                    Text("Edit")
+                                    Image(systemName: "pencil.and.ellipsis.rectangle")
+                                }
+                                
+                                Button(action: {
                                     if let id = drawingEntity.objectId {
                                         DrawingHttpStore().delete(id: id)
                                     }
@@ -40,9 +52,7 @@ struct PencilTab: View {
                                     Text("Delete")
                                     Image(systemName: "xmark.circle")
                                 }
-                                .onTapGesture {
-                                    self.environment.update()
-                                }
+                                
                                 
                         }
                         
@@ -56,6 +66,7 @@ struct PencilTab: View {
                             withAnimation {
                                 if self.showTextInput {
                                     self.textInputText = ""
+                                    self.editedDrawing = nil
                                 }
                                 self.showTextInput.toggle()
                             }
@@ -67,14 +78,23 @@ struct PencilTab: View {
                         , trailing:
                         Button(action: {
                             if self.showTextInput && !self.textInputText.isEmpty {
-                                DrawingHttpStore().update(title: self.textInputText,
-                                                          data: PKDrawing().dataRepresentation(),
+                                let data: Data
+                                if let editedDrawing = self.editedDrawing {
+                                    data = editedDrawing.data
+                                } else {
+                                    data = PKDrawing().dataRepresentation()
+                                }
+                                    
+                                DrawingHttpStore().update(id: self.editedDrawing?.objectId,
+                                                            title: self.textInputText,
+                                                          data: data,
                                                           completion: {
                                                             self.environment.update()
                                 })
-                                if self.showTextInput {
-                                    self.textInputText = ""
-                                }
+                                
+                                self.textInputText = ""
+                                self.editedDrawing = nil
+                                
                             }
                             withAnimation {
                                 self.showTextInput.toggle()

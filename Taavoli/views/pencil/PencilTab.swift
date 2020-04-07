@@ -79,18 +79,20 @@ struct PencilTab: View {
                         Button(action: {
                             if self.showTextInput && !self.textInputText.isEmpty {
                                 let data: Data
-                                if let editedDrawing = self.editedDrawing {
-                                    data = editedDrawing.data
+                                if let editedData = self.editedDrawing?.data {
+                                    data = editedData
                                 } else {
                                     data = PKDrawing().dataRepresentation()
                                 }
-                                    
-                                DrawingHttpStore().update(id: self.editedDrawing?.objectId,
-                                                            title: self.textInputText,
-                                                          data: data,
-                                                          completion: {
-                                                            self.environment.update()
-                                })
+                                
+                                if let id = self.editedDrawing?.objectId {
+                                    DrawingHttpStore().update(id: id,
+                                                                title: self.textInputText,
+                                                              data: data,
+                                                              completion: {
+                                                                self.environment.update()
+                                    })
+                                }
                                 
                                 self.textInputText = ""
                                 self.editedDrawing = nil

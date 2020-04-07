@@ -11,9 +11,9 @@ public class DrawingModel {
     var objectId: String?
     let index: Int
     let title: String
-    let data: Data
+    let data: Data?
     
-    init(objectId: String? = nil, index: Int = 0, title: String, data: Data) {
+    init(objectId: String? = nil, index: Int = 0, title: String, data: Data?) {
         self.index = index
         self.data = data
         self.title = title

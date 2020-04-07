@@ -66,7 +66,11 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     
     func update() {
         
-        DrawingHttpStore().update(id: drawingModel.objectId, title: drawingModel.title, data: drawing.dataRepresentation(), completion: {})
+        if let objectId = drawingModel.objectId {
+            DrawingHttpStore().update(id: objectId, title: drawingModel.title, data: drawing.dataRepresentation(), completion: {})
+        } else {
+            DrawingHttpStore().save(title: drawingModel.title, data: drawing.dataRepresentation(), completion: {})
+        }
         
         do {
             print("transmission_start")
@@ -132,7 +136,9 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
         if let objectId = drawingModel.objectId {
             DrawingHttpStore().get(id: objectId, completion: { drawingRequest in
                 do {
-                    self.drawing = try PKDrawing(data: drawingRequest.data)
+                    if let data = drawingRequest.data {
+                        self.drawing = try PKDrawing(data: data)
+                    }
                 } catch {
                     print(error)
                 }
@@ -168,7 +174,7 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     
     private func convertToDrawing(drawingModel: DrawingModel) -> PKDrawing {
         do {
-            let data = drawingModel.data
+            guard let data = drawingModel.data else { return PKDrawing() }
             return try PKDrawing(data: data)
         } catch {
             print("Error converting data to Drawing")
@@ -237,8 +243,10 @@ extension CanvasViewImpl: WebSocketDelegate {
                     r1.index < r2.index
                 }
                 
-                let mappedToData = sorted.map { (drawingRequest) -> Data in
-                    drawingRequest.data
+                let mappedToData = sorted.filter({ (drawingRequest) -> Bool in
+                    drawingRequest.data != nil
+                }).map { (drawingRequest) -> Data in
+                    drawingRequest.data!
                 }
                 
                 var finalData = Data()

@@ -11,9 +11,9 @@ public class DrawingRequest: Codable {
     var id: String?
     let index: Int
     let title: String
-    let data: Data
+    let data: Data?
     
-    init(id: String? = nil, index: Int = 0, title: String, data: Data) {
+    init(id: String? = nil, index: Int = 0, title: String, data: Data?) {
         self.id = id
         self.index = index
         self.data = data

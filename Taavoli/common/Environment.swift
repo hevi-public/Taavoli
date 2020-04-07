@@ -21,10 +21,8 @@ class AppEnvironment: ObservableObject {
     public func update(completion: @escaping ([DrawingRequest]) -> () = {_ in }) {
 //        self.drawings = CoreDataStore().getAll()
         
-        DrawingHttpStore().getAll { (drawingRequests) in
-            self.drawings = drawingRequests.map { drawingRequest -> DrawingModel in
-                return DrawingModel(objectId: drawingRequest.id, index: drawingRequest.index, title: drawingRequest.title, data: drawingRequest.data)
-            }
+        DrawingHttpStore().getAll { (drawings) in
+            self.drawings = drawings
         }
         
     }

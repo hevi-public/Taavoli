@@ -85,11 +85,22 @@ struct PencilTab: View {
                                     data = PKDrawing().dataRepresentation()
                                 }
                                 
+                                var drawingStore: DrawingStore = DrawingHttpStore()
+                                if AppDelegate.useCoreData {
+                                    drawingStore = CoreDataStore()
+                                }
+                                
                                 if let id = self.editedDrawing?.objectId {
-                                    DrawingHttpStore().update(id: id,
-                                                                title: self.textInputText,
+                                    drawingStore.update(id: id,
+                                                              title: self.textInputText,
                                                               data: data,
                                                               completion: {
+                                                                self.environment.update()
+                                    })
+                                } else {
+                                    drawingStore.save(title: self.textInputText,
+                                                            data: data,
+                                                            completion: {
                                                                 self.environment.update()
                                     })
                                 }

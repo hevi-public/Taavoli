@@ -10,17 +10,10 @@ import CoreData
 
 class ManagedObjectContext {
     
-    static let context = NSManagedObjectContext.getContext()
-    
     public static func update() {
         do {
-            if context.hasChanges {
-                
-                context.updatedObjects.forEach { (entity) in
-                    (entity as? DrawingEntity)?.updatedAt = Date()
-                }
-                
-                try context.save()
+            if NSManagedObjectContext.getContext().hasChanges {
+                try NSManagedObjectContext.getContext().save()
             }
         } catch {
             print("Problem while updating drawing")
@@ -32,7 +25,7 @@ class ManagedObjectContext {
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = sortDescriptors
         do {
-            return try context.fetch(fetchRequest) as! [DrawingEntity]
+            return try NSManagedObjectContext.getContext().fetch(fetchRequest) as! [DrawingEntity]
         } catch let error {
             print(error.localizedDescription)
         }
@@ -40,6 +33,6 @@ class ManagedObjectContext {
     }
     
     public static func get(id: NSManagedObjectID) -> DrawingEntity? {
-        return context.object(with: id) as? DrawingEntity
+        return NSManagedObjectContext.getContext().object(with: id) as? DrawingEntity
     }
 }

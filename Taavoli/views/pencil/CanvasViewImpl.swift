@@ -66,10 +66,15 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     
     func update() {
         
+        var drawingStore: DrawingStore = DrawingHttpStore()
+        if AppDelegate.useCoreData {
+            drawingStore = CoreDataStore()
+        }
+        
         if let objectId = drawingModel.objectId {
-            DrawingHttpStore().update(id: objectId, title: drawingModel.title, data: drawing.dataRepresentation(), completion: {})
+            drawingStore.update(id: objectId, title: drawingModel.title, data: drawing.dataRepresentation(), completion: {})
         } else {
-            DrawingHttpStore().save(title: drawingModel.title, data: drawing.dataRepresentation(), completion: {})
+            drawingStore.save(title: drawingModel.title, data: drawing.dataRepresentation(), completion: {})
         }
         
         do {
@@ -134,7 +139,12 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
     override public func becomeFirstResponder() -> Bool {
         
         if let objectId = drawingModel.objectId {
-            DrawingHttpStore().get(id: objectId, completion: { drawingRequest in
+            var drawingStore: DrawingStore = DrawingHttpStore()
+            if AppDelegate.useCoreData {
+                drawingStore = CoreDataStore()
+            }
+            
+            drawingStore.get(id: objectId, completion: { drawingRequest in
                 do {
                     if let data = drawingRequest.data {
                         self.drawing = try PKDrawing(data: data)
@@ -143,6 +153,7 @@ class CanvasViewImpl: PKCanvasView, PKCanvasViewDelegate {
                     print(error)
                 }
             })
+            
         }
         
         

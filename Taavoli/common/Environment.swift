@@ -19,11 +19,13 @@ class AppEnvironment: ObservableObject {
     }
     
     public func update(completion: @escaping ([DrawingRequest]) -> () = {_ in }) {
-//        self.drawings = CoreDataStore().getAll()
-        
-        DrawingHttpStore().getAll { (drawings) in
-            self.drawings = drawings
+        var drawingStore: DrawingStore = DrawingHttpStore()
+        if AppDelegate.useCoreData {
+            drawingStore = CoreDataStore()
         }
         
+        drawingStore.getAll { (drawings) in
+            self.drawings = drawings
+        }
     }
 }
